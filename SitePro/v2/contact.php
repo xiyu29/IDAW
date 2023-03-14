@@ -4,7 +4,8 @@ require_once('template_header.php');
 
         <!-- Navigation-->
         <?php
-            require_once('template_menu.php')
+            require_once('template_menu.php');
+            renderMenuToHTML('Contact');
         ?>
         <!-- Page Header-->
         <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">

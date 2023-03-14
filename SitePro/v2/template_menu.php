@@ -39,7 +39,12 @@
                         <ul class="navbar-nav ms-auto py-4 py-lg-0">
         ';
         foreach($mymenu as $pageId => $pageParameters) {
-            echo '<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
+            if($currentPageId == $pageId){
+                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
+            }
+            else{
+                echo '<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
+            }
         }
         echo '
                         </ul>
