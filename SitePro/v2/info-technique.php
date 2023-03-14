@@ -3,7 +3,9 @@
 ?>
 
 <?php
-    require_once('template_menu.php')
+    require_once('template_menu.php');
+    renderMenuToHTML('info-tech');
+
 ?>
 
 <header class="masthead" style="background-image: url('assets/img/555176.jpg')">
