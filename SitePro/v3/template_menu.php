@@ -26,7 +26,6 @@
             'Contact' => array('contact'),
             'Info' => array('info-technique')
         );
-        $length = count($mymenu);
         echo '
             <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
                 <div class="container px-4 px-lg-5">
