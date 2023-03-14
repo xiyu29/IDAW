@@ -37,11 +37,17 @@
                         <ul class="navbar-nav ms-auto py-4 py-lg-0">
         ';
         foreach($mymenu as $pageId => $pageParameters) {
-            if($currentPageId == $pageId){
-                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
+            // if($currentPageId == $pageId){
+            //     echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=' . $pageParameters[0] . '">' . $pageId . '</a></li>';
+            // }
+            // else{
+            //     echo '<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
+            // }
+            if($pageId == 'Home Page'){
+                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=accueil">' . $pageId . '</a></li>';
             }
             else{
-                echo '<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
+                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=' . $pageParameters[0] . '1">' . $pageId . '</a></li>';
             }
         }
         echo '
