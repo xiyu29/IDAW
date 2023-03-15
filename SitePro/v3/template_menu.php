@@ -18,13 +18,13 @@
 </nav> -->
 
 <?php
-    function renderMenuToHTML($currentPageId) {
+    function renderMenuToHTML($currentPageId, $currentPageLanguage) {
         $mymenu = array(
             'Home Page' => array( 'index' ),
             'CV' => array( 'cv' ),
             'Projets' => array('projets'),
             'Contact' => array('contact'),
-            'Info' => array('info-technique')
+            'Info' => array('info-technique'),
         );
         echo '
             <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
@@ -36,20 +36,27 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ms-auto py-4 py-lg-0">
         ';
+
         foreach($mymenu as $pageId => $pageParameters) {
-            // if($currentPageId == $pageId){
-            //     echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=' . $pageParameters[0] . '">' . $pageId . '</a></li>';
-            // }
-            // else{
-            //     echo '<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php">' . $pageId . '</a></li>';
-            // }
             if($pageId == 'Home Page'){
-                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=accueil">' . $pageId . '</a></li>';
+                echo '<li class="nav-item"><a id="' . 
+                    $pageId . 
+                    '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . 
+                    $pageParameters[0] . '.php?page=accueil&lang=' . 
+                    $currentPageLanguage . '">' . $pageId . '</a></li>';
             }
             else{
-                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?page=' . $pageParameters[0] . '">' . $pageId . '</a></li>';
+                echo '<li class="nav-item"><a id="' . $pageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?page=' . $pageParameters[0] . '&lang=' . $currentPageLanguage . '">' . $pageId . '</a></li>';
             }
         }
+        
+        if($currentPageLanguage == "fr"){
+            $currentPageLanguage = "en";
+        }
+        else{
+            $currentPageLanguage = "fr";
+        }
+        echo '<li class="nav-item"><a id="lang" class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?page=accueil&lang=' . $currentPageLanguage . '">' . $currentPageLanguage. '</a></li>';
         echo '
                         </ul>
                     </div>
