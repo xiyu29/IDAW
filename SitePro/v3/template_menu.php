@@ -47,7 +47,7 @@
                 echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=accueil">' . $pageId . '</a></li>';
             }
             else{
-                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="' . $pageParameters[0] . '.php?page=' . $pageParameters[0] . '1">' . $pageId . '</a></li>';
+                echo '<li class="nav-item"><a id="' . $currentPageId . '" class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?page=' . $pageParameters[0] . '">' . $pageId . '</a></li>';
             }
         }
         echo '
