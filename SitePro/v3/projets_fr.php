@@ -3,12 +3,12 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
-                            <h1>My projets</h1>
-                            <h2 class="subheading">In my four-year's time in IMT</h2>
+                            <h1>Mes projets</h1>
+                            <h2 class="subheading">Au de mes études à l'IMT</h2>
                             <span class="meta">
-                                Posted by
-                                <a href="index.php">Xi</a>
-                                on March 13, 2023
+                                Postulé par 
+                                <a href="index.php?page=accueil&lang=fr">Xi</a>
+                                le 13/3/2023
                             </span>
                         </div>
                     </div>

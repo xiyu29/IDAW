@@ -10,7 +10,7 @@
 ?>
 
 <?php
-    renderMenuToHTML('Home Page');
+    renderMenuToHTML('Home Page','fr');
 ?>
 
 <header class="masthead" style="background-image: url('assets/img/555176.jpg')">

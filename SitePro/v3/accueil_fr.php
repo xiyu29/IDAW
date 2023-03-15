@@ -20,12 +20,12 @@
                     <div class="post-preview">
                         <a href="post.php">
                             <h2 class="post-title">Doc1 à ajouter</h2>
-                            <h3 class="post-subtitle">Sous titre du doc1</h3>
+                            <h3 class="post-subtitle">Sous-titre du doc1</h3>
                         </a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="index.php">Xi</a>
-                            on March 13, 2023
+                            Postulé par 
+                            <a href="index.php?page=accueil&lang=fr">Xi</a>
+                            le 13/3/2023
                         </p>
                     </div>
                     <!-- Divider-->
@@ -34,9 +34,9 @@
                     <div class="post-preview">
                         <a href="post.php"><h2 class="post-title">Doc2 à ajouter</h2></a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="index.php">Xi</a>
-                            on March 13, 2023
+                            Postulé par 
+                            <a href="index.php?page=accueil&lang=fr">Xi</a>
+                            le 13/3/2023
                         </p>
                     </div>
                     <!-- Divider-->
@@ -48,9 +48,9 @@
                             <h3 class="post-subtitle">Sous-titre du doc3</h3>
                         </a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="index.php">Xi</a>
-                            on March 13, 2023
+                            Postulé par 
+                            <a href="index.php?page=accueil&lang=fr">Xi</a>
+                            le 13/3/2023
                         </p>
                     </div>
                     <!-- Divider-->
@@ -62,9 +62,9 @@
                             <h3 class="post-subtitle">Sous-titre du doc3</h3>
                         </a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="index.php">Xi</a>
-                            on March 13, 2023
+                            Postulé par 
+                            <a href="index.php?page=accueil&lang=fr">Xi</a>
+                            le 13/3/2023
                         </p>
                     </div>
                     <!-- Divider-->
