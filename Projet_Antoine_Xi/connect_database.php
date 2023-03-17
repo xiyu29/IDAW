@@ -1,16 +1,6 @@
 <?php
 
-// connect to db
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projet_idaw";
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// check if the connexion is succeed
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once('check_connexion.php');
 
 // inquire of data exp in the table 'tranche_age'
 $sql = "SELECT * FROM tranche_age";
