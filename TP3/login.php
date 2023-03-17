@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Se connecter..." /></td>
+            <td><input type="submit" value="Se connecter" /></td>
         </tr>
     </table>
 </form>
