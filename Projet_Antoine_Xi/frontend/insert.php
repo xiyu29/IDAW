@@ -1,19 +1,31 @@
+<?php
+    require_once('check_connexion.php');
+    $result = mysqli_query($conn, "SELECT Nom_type FROM type_nourriture");
+?>
+
+
 <form method="post" action="insert.php">
-  <label for="name">Nom aliment:</label>
-  <input type="text" name="nom_aliment" id="nom_aliment"><br>
-  <label for="email">Calorie par 100g:</label>
-  <input type="text" name="calorie" id="calorie"><br>
-  <label for="phone">Type</label>
-  <input type="text" name="type" id="type"><br>
-  <input type="submit" name="submit" value="Insert">
+    <label for="name">Nom aliment:</label>
+    <input type="text" name="nom_aliment" id="nom_aliment"><br>
+    <label for="email">Calorie par 100g:</label>
+    <input type="text" name="calorie" id="calorie"><br>
+    <label for="phone">Type</label>
+    <select name="Nom_type" id="Nom_type" style="width: 200px;">
+        <?php
+            while($row = mysqli_fetch_array($result)) {
+                echo "<option width='200' value='" . $row['Nom_type'] . "'>" . $row['Nom_type'] . "</option>";
+            }
+        ?>
+    </select><br>
+    <input type="submit" name="submit" value="Insert">
 </form>
 
 <?php
     if(isset($_POST['submit'])){
-        if (isset($_POST['nom_aliment']) && isset($_POST['calorie']) && isset($_POST['type'])) {
+        if (isset($_POST['nom_aliment']) && isset($_POST['calorie']) && isset($_POST['Nom_type'])) {
             $nom_aliment = $_POST['nom_aliment'];
             $calorie = $_POST['calorie'];
-            $type = $_POST['type'];
+            $type = $_POST['Nom_type'];
         
 
             require_once('check_connexion.php');
