@@ -1,4 +1,4 @@
-<?
+<?php
     if(isset($_POST['modify_ok'])){
         $newName = $_POST['modifyName'];
         $newEmail = $_POST['modifyEmail'];
