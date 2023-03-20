@@ -1,4 +1,6 @@
 <?php
+
+    //connexion of db
     require_once('config.php');
 
     $connectionString = "mysql:host=". _MYSQL_HOST;
@@ -18,15 +20,10 @@
         echo 'Erreur : '.$erreur->getMessage();
     }
 
+    //fetch all champs in 'users'
     $request = $pdo->prepare("select * from users");
     $request->execute();
     $result = $request->fetchAll(PDO::FETCH_OBJ);
-    // $length = count($result);
-    // $sousLength = count($result[0]) / 2;
-    // print_r($length);
-    // print_r($result[0]);
-    // print_r($sousLength);
-    // print_r($result);
 
     echo '<h1 align="center">Users</h1>';
     echo 
@@ -57,4 +54,6 @@
         ';
     
     $pdo = null;
+
+    // require_once('db_init.php');
 ?>
