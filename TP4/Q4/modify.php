@@ -13,7 +13,7 @@
 
         echo '
             <form method="post" action="users.php">
-                <table align="center" border="1px">
+                <table align="center">
                     <tr>
             ';
         foreach($result as $value){

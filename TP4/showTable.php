@@ -4,7 +4,7 @@
     echo 
         '
            
-                <table align="center" border="1px">
+                <table align="center">
                     <thead>
                         <tr>
                             <th width="100px">id</th>

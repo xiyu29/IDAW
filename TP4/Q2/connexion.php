@@ -1,6 +1,5 @@
 <?php
 
-    require_once('config.php');
     $servername = _MYSQL_HOST; $dbname = _MYSQL_DBNAME; $username = _MYSQL_USER; $password = _MYSQL_PASSWORD;
 
     $connectionString = "mysql:host=". _MYSQL_HOST;
@@ -15,6 +14,7 @@
     try {
         $pdo = new PDO($connectionString,_MYSQL_USER,_MYSQL_PASSWORD,$options);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // echo 'connexion ok';
     }
     catch (PDOException $erreur) {
         echo 'Erreur : '.$erreur->getMessage();
