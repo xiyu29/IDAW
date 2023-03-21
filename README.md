@@ -12,4 +12,14 @@
 ## GET
 ### http://localhost/TP4/Q5/api.php
     Show all informations in the table 'users'
-###
+### http://localhost/TP4/Q5/api.php/{id}
+    Show the user correspondant to id
+## POST
+### http://localhost/TP4/Q5/api.php
+    Add an user with parameters {name} and {email}, no need to enter {id} because it is of type 'auto-increment'
+## PUT
+### http://localhost/TP4/Q5/api.php/{id}
+    Modify an user of id {id} with new parameters {name} and {email}
+## DELETE
+### http://localhost/TP4/Q5/api.php/{id}
+    Delete an user if id {id}
