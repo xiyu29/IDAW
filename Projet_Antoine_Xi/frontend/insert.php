@@ -5,32 +5,35 @@
 
 
 <form method="post" action="insert.php">
-    <label for="name">Nom aliment:</label>
-    <input type="text" name="nom_aliment" id="nom_aliment"><br>
-    <label for="email">Calorie par 100g:</label>
-    <input type="text" name="calorie" id="calorie"><br>
-    <label for="phone">Type</label>
-    <select name="Nom_type" id="Nom_type" style="width: 200px;">
+    <label for="Nom_aliment">Nom aliment:</label>
+    <select name="Nom_aliment" id="Nom_aliment" style="width: 200px;">
         <?php
             while($row = mysqli_fetch_array($result)) {
-                echo "<option width='200' value='" . $row['Nom_type'] . "'>" . $row['Nom_type'] . "</option>";
+                echo "<option width='200' value='" . $row['Nom_aliment'] . "'>" . $row['Nom_aliment'] . "</option>";
             }
         ?>
     </select><br>
-    <input type="submit" name="submit" value="Insert">
+
+    <label for="Nom_composant">Nom composant:</label>
+    <select name="Nom_composant" id="Nom_composant" style="width: 200px;">
+        <?php
+            while($row = mysqli_fetch_array($result)) {
+                echo "<option width='200' value='" . $row['Nom_aliment'] . "'>" . $row['Nom_aliment'] . "</option>";
+            }
+        ?>
+    </select><br>
 </form>
 
 <?php
     if(isset($_POST['submit'])){
-        if (isset($_POST['nom_aliment']) && isset($_POST['calorie']) && isset($_POST['Nom_type'])) {
-            $nom_aliment = $_POST['nom_aliment'];
-            $calorie = $_POST['calorie'];
-            $type = $_POST['Nom_type'];
+        if (isset($_POST['Nom_aliment']) && isset($_POST['Nom_composant'])) {
+            $nom_aliment = $_POST['Nom_aliment'];
+            $nom_composant = $_POST['Nom_composant'];
         
 
             require_once('check_connexion.php');
 
-            $sql = "INSERT INTO aliment (`Nom_aliment`, `Calorie_par_100g`, `Type`) VALUES ('$nom_aliment', $calorie, '$type')";
+            $sql = "INSERT INTO composant (`Nom_aliment`, `Nom_composant`) VALUES ('$nom_aliment', $nom_composant)";
 
         //insert a new record
             if (mysqli_query($conn, $sql)) {
