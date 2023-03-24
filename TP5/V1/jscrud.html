@@ -31,13 +31,13 @@
         </style>
     </head>
     <body>
-        <table class="table border">
+        <table class="table border" border="1px">
             <thead>
                 <tr class="head_background">
                     <th scope="col" width="100px">Nom</th>
                     <th scope="col" width="100px">Prenom</th>
-                    <th scope="col" width="150px">Date de naissance</th>
-                    <th scope="col" width="170px">J'aime le cours Web</th>
+                    <th scope="col" width="200px">Date de naissance</th>
+                    <th scope="col" width="200px">J'aime le cours Web</th>
                     <th scope="col" width="400px">Remarques</th>
                     <th scope="col" width="150px" colspan="2">CRUD</th>
                 </tr>
@@ -80,7 +80,7 @@
             <div class="form-group row">
                 <span class="col-sm-2"></span>
                 <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary form-control">Submit</button>
+                    <button type="submit" class="btn btn-primary form-control" id="submit">Submit</button>
                 </div>
             </div>
         </form>
@@ -102,18 +102,20 @@
                 let date = $("#inputDate").val();
                 let remarque = $("#inputRemarque").val();
 
+                deleteRow(nom);
+
                 $("#studentsTableBody").append(`
-                    <tr align="center">
+                    <tr align="center" id="${nom}">
                         <td>${nom}</td>
                         <td>${prenom}</td>
                         <td>${date}</td>
                         <td>${res}</td>
                         <td>${remarque}</td>
                         <td>
-                            <a href='jscrud.html'>Edit</a>
+                            <button onclick="editRow('${nom}')">Edit</button>
                         </td>
                         <td>
-                            <a href='jscrud.html'>Delete</a>
+                            <button onclick="deleteRow('${nom}')">Delete</button>
                         </td>
                     </tr>
                 `);
@@ -124,6 +126,36 @@
                 document.getElementById("inputDate").value = "";
                 document.getElementById("inputRemarque").value = "";
                 document.getElementById("inputCheckbox").checked = false;
+            }
+
+            function deleteRow(rowId){
+                var row = document.getElementById(rowId);
+                if(row != null){
+                    row.parentNode.removeChild(row);
+                }    
+            }
+
+            function editRow(rowId){
+                var row = document.getElementById(rowId);
+                var tds = row.querySelectorAll('td');
+                var tdContents = [];
+                for (var i = 0; i < tds.length; i++) {
+                    tdContents.push(tds[i].textContent);
+                }
+                var length = tdContents.length;
+                document.getElementById("inputNom").value = tdContents[0];
+                document.getElementById("inputPrenom").value = tdContents[1];
+                document.getElementById("inputDate").value = tdContents[2];
+                document.getElementById("inputRemarque").value = tdContents[4];
+                if(tdContents[3] == "Oui"){
+                    document.getElementById("inputCheckbox").checked = true;
+                }
+                else{
+                    document.getElementById("inputCheckbox").checked = false;
+                }
+
+                console.log(tdContents);
+
             }
         </script>
     </body>
