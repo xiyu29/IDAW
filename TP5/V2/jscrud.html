@@ -134,8 +134,8 @@
                 $.ajax({
                     url: "http://localhost/TP4/Q5/api.php",
                     method: "POST",
-                    data: {name: 'test', email  : 'test@email'},
-                    //dataType: "json",
+                    data: JSON.stringify({name: 'test', email  : 'test@email'}),
+                    dataType: "json",
                     success: function(data) {
                         console.log('succeed'); 
                     },
