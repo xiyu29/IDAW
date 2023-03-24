@@ -9,6 +9,7 @@
     $uri = explode( '/', $uri );     
     
     switch($request_method){
+
         case 'GET':
             if(!empty($uri[4])) {             
                 $request = $pdo->prepare("SELECT * FROM Users WHERE id=$uri[4]");
@@ -16,7 +17,7 @@
                 $resultat = $request->fetchAll(PDO::FETCH_OBJ);
             }
             else {
-                $request = $pdo->prepare("SELECT * FROM Users");
+                $request = $pdo->prepare("SELECT * FROM Users ORDER BY id ASC");
                 $request->execute();
                 $resultat = $request->fetchAll(PDO::FETCH_OBJ);
             }
@@ -25,28 +26,45 @@
         case 'POST':
             $json = json_decode(file_get_contents('php://input'), true);         
             $name = $json['name'];         
-            $email = $json['email'];         
-            $request = $pdo->prepare("INSERT INTO Users (name, email) VALUES ('$name', '$email')");         
+            $email = $json['email'];
+            $givenName = $json['givenName'];         
+            $aimeCours = $json['aimeCours']; 
+            $dateNaissance = $json['dateNaissance'];         
+            $remarque = $json['remarque'];          
+            $request = $pdo->prepare("INSERT INTO Users (name, email, givenName, aimeCours, dateNaissance, remarque) VALUES ('$name', '$email', '$givenName', '$aimeCours', '$dateNaissance', '$remarque')");         
             $request->execute();         
             $resultat = $request->fetchAll(PDO::FETCH_OBJ);
             break;
 
         case 'PUT':
-            if(!empty($uri[4])) {
-                $json = json_decode(file_get_contents('php://input'), true);
-                $name = $json['name'];
-                $email = $json['email'];
-                $request = $pdo->prepare("UPDATE Users SET email='" . $email . "' WHERE id=" . $uri[4]);
-                $request->execute();
-                $request = $pdo->prepare("UPDATE Users SET name='" . $name . "' WHERE id=" . $uri[4]);
-                $request->execute();
-            }
+            $json = json_decode(file_get_contents('php://input'), true);
+            $id = $json['id']; 
+            $name = $json['name'];         
+            $email = $json['email'];
+            $givenName = $json['givenName'];         
+            $aimeCours = $json['aimeCours']; 
+            $dateNaissance = $json['dateNaissance'];         
+            $remarque = $json['remarque']; 
+            $request = $pdo->prepare("UPDATE Users SET name=$name WHERE id=$id");
+            $request->execute();
+            $request = $pdo->prepare("UPDATE Users SET name=$email WHERE id=$id");
+            $request->execute();
+            $request = $pdo->prepare("UPDATE Users SET name=$givenName WHERE id=$id");
+            $request->execute();
+            $request = $pdo->prepare("UPDATE Users SET name=$aimeCours WHERE id=$id");
+            $request->execute();
+            $request = $pdo->prepare("UPDATE Users SET name=$dateNaissance WHERE id=$id");
+            $request->execute();
+            $request = $pdo->prepare("UPDATE Users SET name=$remarque WHERE id=$id");
+            $request->execute();
             break;
 
         case 'DELETE':
-            if(!empty($uri[4])) {
-                $request = $pdo->prepare("DELETE FROM Users WHERE id=$uri[4])");
-            }
+            $json = json_decode(file_get_contents('php://input'), true);         
+            $id = $json['id'];  
+            $request = $pdo->prepare("DELETE FROM Users WHERE id=$id");
+            $request->execute();
+            $resultat = $request->fetchAll(PDO::FETCH_OBJ);
             break;
     }
 

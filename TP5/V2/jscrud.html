@@ -4,6 +4,32 @@
         <meta charset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script>
+            $.ajax({
+                url: "http://localhost/TP4/Q5/api.php",
+                method: "GET",
+                success: function(data) {
+                    showAll(data);
+                },
+                error: function(error) {
+                console.log(error);
+                }
+            });
+        </script>
+        <script>
+            function showAll(){
+                $.ajax({
+                    url: "http://localhost/TP4/Q5/api.php",
+                    method: "GET",
+                    success: function(data) {
+                        console.log(data); 
+                    },
+                    error: function(error) {
+                      console.log(error);
+                    }
+                });
+            }
+        </script>
         <title>tabletest</title>
         <style>
             body{ margin-top: 5em; }
@@ -34,15 +60,18 @@
         <table class="table border" border="1px">
             <thead>
                 <tr class="head_background">
+                    <!-- <th scope="col" width="50px">Id</th> -->
+                    <th scope="col" width="100px">Id</th>
                     <th scope="col" width="100px">Nom</th>
                     <th scope="col" width="100px">Prenom</th>
+                    <th scope="col" width="200px">Email</th>
                     <th scope="col" width="200px">Date de naissance</th>
                     <th scope="col" width="200px">J'aime le cours Web</th>
                     <th scope="col" width="400px">Remarques</th>
                     <th scope="col" width="150px" colspan="2">CRUD</th>
                 </tr>
-            </thead>
-                <tbody id="studentsTableBody">
+            </thead>  
+            <tbody id="studentsTableBody">
             </tbody>
         </table>
         <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
@@ -56,6 +85,12 @@
                 <label for="inputPrenom" class="col-sm-2 col-form-label">Prenom</label>
                 <div class="col-sm-3">
                     <input type="text" class="form-control" id="inputPrenom" >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputEmail" >
                 </div>
             </div>
             <div class="form-group row">
@@ -83,16 +118,20 @@
                     <button type="submit" class="btn btn-primary form-control" id="submit">Submit</button>
                 </div>
             </div>
+            <div class="form-group row">
+                <span class="col-sm-2"></span>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary form-control" id="modify">Modify</button>
+                </div>
+            </div>
         </form>
         <script>
-            let students = [];
-
-            
 
             function onFormSubmit() {
                 // prevent the form to be sent to the server
                 event.preventDefault();
 
+                //get every champ
                 var checkbox = document.getElementById("inputCheckbox");
                 let res = "";
                 if (checkbox.checked) {
@@ -100,44 +139,39 @@
                 } else {
                     res = "Non";
                 }
-
                 let nom = $("#inputNom").val();
                 let prenom = $("#inputPrenom").val();
+                let email = $("#inputEmail").val();
                 let date = $("#inputDate").val();
                 let remarque = $("#inputRemarque").val();
 
-                let tmp = [];
-                tmp.push([nom,prenom,date,res,remarque]);
-
-                students.push([tmp]);
-
-                deleteRow(nom);
-
-                $("#studentsTableBody").append(`
-                    <tr align="center" id="${nom}">
-                        <td>${nom}</td>
-                        <td>${prenom}</td>
-                        <td>${date}</td>
-                        <td>${res}</td>
-                        <td>${remarque}</td>
-                        <td>
-                            <button onclick="editRow('${nom}')">Edit</button>
-                        </td>
-                        <td>
-                            <button onclick="deleteRow('${nom}')">Delete</button>
-                        </td>
-                    </tr>
-                `);
-
-                //api ajax
-            
+                //api ajax in order to insert a new record
                 $.ajax({
                     url: "http://localhost/TP4/Q5/api.php",
                     method: "POST",
-                    data: JSON.stringify({name: 'test', email  : 'test@email'}),
+                    data: JSON.stringify({
+                        name: nom, 
+                        givenName: prenom,
+                        email: email,
+                        aimeCours: res,
+                        dateNaissance: date,
+                        remarque: remarque,
+                    }),
                     dataType: "json",
                     success: function(data) {
-                        console.log('succeed'); 
+                        //delete everything in tbody
+                        document.getElementById("studentsTableBody").innerHTML = "";
+                        //to show table
+                        $.ajax({
+                            url: "http://localhost/TP4/Q5/api.php",
+                            method: "GET",
+                            success: function(data) {
+                                showAll(data);
+                            },
+                            error: function(error) {
+                            console.log(error);
+                            }
+                        });
                     },
                     error: function(error) {
                       console.log(error);
@@ -147,16 +181,36 @@
                 //clear all input
                 document.getElementById("inputNom").value = "";
                 document.getElementById("inputPrenom").value = "";
+                document.getElementById("inputEmail").value = "";
                 document.getElementById("inputDate").value = "";
                 document.getElementById("inputRemarque").value = "";
                 document.getElementById("inputCheckbox").checked = false;
             }
 
             function deleteRow(rowId){
-                var row = document.getElementById(rowId);
-                if(row != null){
-                    row.parentNode.removeChild(row);
-                }    
+                $.ajax({
+                    url: "http://localhost/TP4/Q5/api.php",
+                    method: "DELETE",
+                    data: JSON.stringify({
+                        id: rowId,     
+                    }),
+                    success: function(data) {
+                        document.getElementById("studentsTableBody").innerHTML = "";
+                        $.ajax({
+                            url: "http://localhost/TP4/Q5/api.php",
+                            method: "GET",
+                            success: function(data) {
+                                showAll(data);
+                            },
+                            error: function(error) {
+                            console.log(error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });  
             }
 
             function editRow(rowId){
@@ -167,20 +221,91 @@
                     tdContents.push(tds[i].textContent);
                 }
                 var length = tdContents.length;
-                document.getElementById("inputNom").value = tdContents[0];
-                document.getElementById("inputPrenom").value = tdContents[1];
-                document.getElementById("inputDate").value = tdContents[2];
-                document.getElementById("inputRemarque").value = tdContents[4];
-                if(tdContents[3] == "Oui"){
+                document.getElementById("inputNom").value = tdContents[1];
+                document.getElementById("inputPrenom").value = tdContents[2];
+                document.getElementById("inputDate").value = tdContents[4];
+                document.getElementById("inputRemarque").value = tdContents[6];
+                if(tdContents[5] == "Oui"){
                     document.getElementById("inputCheckbox").checked = true;
                 }
                 else{
                     document.getElementById("inputCheckbox").checked = false;
                 }
 
-                console.log(tdContents);
+                var checkbox = document.getElementById("inputCheckbox");
+                let res = "";
+                if (checkbox.checked) {
+                    res = "Oui";
+                } else {
+                    res = "Non";
+                }
+                let nom = $("#inputNom").val();
+                let prenom = $("#inputPrenom").val();
+                let email = $("#inputEmail").val();
+                let date = $("#inputDate").val();
+                let remarque = $("#inputRemarque").val();
+
+                $.ajax({
+                    url: "http://localhost/TP4/Q5/api.php",
+                    method: "PUT",
+                    data: JSON.stringify({
+                        id: rowId,
+                        name: nom, 
+                        givenName: prenom,
+                        email: email,
+                        aimeCours: res,
+                        dateNaissance: date,
+                        remarque: remarque, 
+                    }),
+                    success: function(data) {
+                        document.getElementById("studentsTableBody").innerHTML = "";
+                        $.ajax({
+                            url: "http://localhost/TP4/Q5/api.php",
+                            method: "GET",
+                            success: function(data) {
+                                showAll(data);
+                            },
+                            error: function(error) {
+                            console.log(error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                }); 
 
             }
+
+        function showAll(data){
+            length = data.length;
+            for(var i = 0; i < length; i ++){
+            let id = data[i].id;
+                let name = data[i].name;
+                let email = data[i].email;
+                let givenName = data[i].givenName;
+                let aimeCours = data[i].aimeCours;
+                let dateNaissance = data[i].dateNaissance;
+                let remarque = data[i].remarque;
+                $("#studentsTableBody").append(`
+                    <tr align="center" id="${id}">
+                        <td>${id}</td>
+                        <td>${name}</td>
+                        <td>${givenName}</td>
+                        <td>${email}</td>
+                        <td>${dateNaissance}</td>
+                        <td>${aimeCours}</td>
+                        <td>${remarque}</td>
+                        <td>
+                            <button onclick="editRow('${id}')">Edit</button>
+                        </td>
+                        <td>
+                            <button onclick="deleteRow('${id}')">Delete</button>
+                        </td>
+                    </tr>
+                `);
+            }
+        }
         </script>
     </body>
 </html>
