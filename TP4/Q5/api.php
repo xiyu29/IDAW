@@ -44,19 +44,19 @@
             $givenName = $json['givenName'];         
             $aimeCours = $json['aimeCours']; 
             $dateNaissance = $json['dateNaissance'];         
-            $remarque = $json['remarque']; 
-            $request = $pdo->prepare("UPDATE Users SET name=$name WHERE id=$id");
+            $remarque = $json['remarque'];
+
+            $request = $pdo->prepare("
+                UPDATE users 
+                SET name='$name', email='$email',givenName='$givenName',aimeCours='$aimeCours',dateNaissance='$dateNaissance',remarque='$remarque'
+                WHERE id='$id'
+            ");
             $request->execute();
-            $request = $pdo->prepare("UPDATE Users SET name=$email WHERE id=$id");
-            $request->execute();
-            $request = $pdo->prepare("UPDATE Users SET name=$givenName WHERE id=$id");
-            $request->execute();
-            $request = $pdo->prepare("UPDATE Users SET name=$aimeCours WHERE id=$id");
-            $request->execute();
-            $request = $pdo->prepare("UPDATE Users SET name=$dateNaissance WHERE id=$id");
-            $request->execute();
-            $request = $pdo->prepare("UPDATE Users SET name=$remarque WHERE id=$id");
-            $request->execute();
+            // $request = $pdo->prepare("DELETE FROM Users WHERE id=$id");
+            // $request->execute();
+            // $request = $pdo->prepare("INSERT INTO Users (id, name, email, givenName, aimeCours, dateNaissance, remarque) VALUES ('$id', '$name', '$email', '$givenName', '$aimeCours', '$dateNaissance', '$remarque')");         
+            // $request->execute();
+
             break;
 
         case 'DELETE':

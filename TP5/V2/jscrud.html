@@ -57,7 +57,8 @@
         </style>
     </head>
     <body>
-        <table class="table border" border="1px">
+        <h1 align="center">Users table</h1>
+        <table class="table border">
             <thead>
                 <tr class="head_background">
                     <!-- <th scope="col" width="50px">Id</th> -->
@@ -74,7 +75,7 @@
             <tbody id="studentsTableBody">
             </tbody>
         </table>
-        <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+        <form id="addStudentForm" action="jscrud.html">
             <div class="form-group row">
                 <label for="inputNom" class="col-sm-2 col-form-label">Nom*</label>
                 <div class="col-sm-3">
@@ -115,13 +116,7 @@
             <div class="form-group row">
                 <span class="col-sm-2"></span>
                 <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary form-control" id="submit">Submit</button>
-                </div>
-            </div>
-            <div class="form-group row">
-                <span class="col-sm-2"></span>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary form-control" id="modify">Modify</button>
+                    <button onclick="onFormSubmit()">Submit</button>
                 </div>
             </div>
         </form>
@@ -214,6 +209,8 @@
             }
 
             function editRow(rowId){
+                var idEdit = rowId;
+                console.log(rowId);
                 var row = document.getElementById(rowId);
                 var tds = row.querySelectorAll('td');
                 var tdContents = [];
@@ -223,6 +220,7 @@
                 var length = tdContents.length;
                 document.getElementById("inputNom").value = tdContents[1];
                 document.getElementById("inputPrenom").value = tdContents[2];
+                document.getElementById("inputEmail").value = tdContents[3];
                 document.getElementById("inputDate").value = tdContents[4];
                 document.getElementById("inputRemarque").value = tdContents[6];
                 if(tdContents[5] == "Oui"){
@@ -231,8 +229,20 @@
                 else{
                     document.getElementById("inputCheckbox").checked = false;
                 }
+                let id = rowId;
+                $("#addStudentForm").append(`
+                    <div class="form-group row">
+                        <span class="col-sm-2"></span>
+                        <div class="col-sm-2">
+                            <button onclick="modifyRow('${id}')">Modify</button>
+                        </div>
+                    </div>
+                `);
+            }
 
-                var checkbox = document.getElementById("inputCheckbox");
+        function modifyRow(rowId){
+            console.log(rowId);
+            var checkbox = document.getElementById("inputCheckbox");
                 let res = "";
                 if (checkbox.checked) {
                     res = "Oui";
@@ -244,8 +254,9 @@
                 let email = $("#inputEmail").val();
                 let date = $("#inputDate").val();
                 let remarque = $("#inputRemarque").val();
-
-                $.ajax({
+                console.log(date);
+                
+            $.ajax({
                     url: "http://localhost/TP4/Q5/api.php",
                     method: "PUT",
                     data: JSON.stringify({
@@ -258,29 +269,18 @@
                         remarque: remarque, 
                     }),
                     success: function(data) {
-                        document.getElementById("studentsTableBody").innerHTML = "";
-                        $.ajax({
-                            url: "http://localhost/TP4/Q5/api.php",
-                            method: "GET",
-                            success: function(data) {
-                                showAll(data);
-                            },
-                            error: function(error) {
-                            console.log(error);
-                            }
-                        });
+                        console.log(rowId + "ok");
                     },
                     error: function(error) {
-                        console.log(error);
+                        console.log("no ok");
                     }
                 }); 
-
-            }
+        }
 
         function showAll(data){
             length = data.length;
             for(var i = 0; i < length; i ++){
-            let id = data[i].id;
+                let id = data[i].id;
                 let name = data[i].name;
                 let email = data[i].email;
                 let givenName = data[i].givenName;
