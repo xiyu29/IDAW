@@ -1,6 +1,6 @@
 <?php
     require_once('connection.php');
-    require_once('users.php');
+    require_once('aliment.php');
 
     // Récupération de la méthode HTTP
     $method = $_SERVER['REQUEST_METHOD'];
