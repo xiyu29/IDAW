@@ -7,12 +7,14 @@
 
     // Récupération de l'URI
     $uri = $_SERVER['PATH_INFO']; 
+    //print_r($uri);
     $uri = explode('/', $uri);
     // print_r($uri[1]);
 
     // Parameter of POST request
     $params = json_decode(file_get_contents('php://input'), true);
-    // print_r($params);
+    //show the array
+    print_r($params);
 
     //Define array key id with value $id
     $params['idAliment'] = $uri[1];    
@@ -32,6 +34,6 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         deleteAliment( $params['idAliment']);
-    }
+    }    
 
 ?>
