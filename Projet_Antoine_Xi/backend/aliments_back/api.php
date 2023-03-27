@@ -7,7 +7,6 @@
 
     // Récupération de l'URI
     $uri = $_SERVER['PATH_INFO']; 
-    echo $uri;
     $uri = explode('/', $uri);
     // print_r($uri[1]);
 
@@ -24,11 +23,11 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        createAliments( $params['nom'], $params['type']);
+        createAliment( $params['nomAliment'], $params['type']);
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-        updateAliment( $params['idAliment'], $params['nom'], $params['type']);
+        updateAliment( $params['idAliment'], $params['nomAliment'], $params['type']);
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {

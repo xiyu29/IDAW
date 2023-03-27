@@ -5,12 +5,12 @@
         // Vérification des paramètres
         global $params;
         global $pdo;
-        global $nom;
+        global $nomAliment;
         global $type;
         $pdo = new PDO('mysql:host=localhost;dbname=projet_idaw;charset=utf8', 'root', '');
-        $nom = $params['nom'];
+        $nomAliment = $params['nomAliment'];
         $type = $params['type'];
-        if (empty($nom) || empty($type)) {
+        if (empty($nomAliment) || empty($type)) {
             header('HTTP/1.1 400 Bad Request');
             echo 'Missing parameter';
             return;
@@ -20,15 +20,15 @@
         $pdo = new PDO('mysql:host=localhost;dbname=projet_idaw;charset=utf8', 'root', '');
         
         // Ajout de l'utilisateur à la base de données
-        $stmt = $pdo->prepare('INSERT INTO aliment (nom, type) VALUES (?, ?)');
-        $stmt -> execute([$nom, $type]);
+        $stmt = $pdo->prepare('INSERT INTO aliment (nomAliment, type) VALUES (?, ?)');
+        $stmt -> execute([$nomAliment, $type]);
         $idAliment = $pdo->lastInsertId();
         
         // Envoi de la réponse HTTP
         header('HTTP/1.1 201 Created');
         header('Location: /aliment.php/' . $idAliment);
         header('Content-Type: application/json');
-        $aliment = ['idAliment' => $idAliment, 'nom' => $nom, 'type' => $type];
+        $aliment = ['idAliment' => $idAliment, 'nomAliment' => $nomAliment, 'type' => $type];
         $json = json_encode($aliment);
         echo $json;
     }
@@ -94,12 +94,12 @@
         // Vérification des paramètres
         global $params;
         global $idAliment;
-        global $nom;
+        global $nomAliment;
         global $type;
         $idAliment = $params['idAliment'];
-        $nom = $params['nom'];
+        $nomAliment = $params['nomAliment'];
         $type = $params['type'];
-        if (empty($idAliment) || empty($nom) || empty($type)) {
+        if (empty($idAliment) || empty($nomAliment) || empty($type)) {
             header('HTTP/1.1 400 Bad Request');
             echo 'Missing parameter';
             return;
@@ -110,8 +110,8 @@
         $pdo = new PDO('mysql:host=localhost;dbname=projet_idaw;charset=utf8', 'root', '');
         
         // Modification de l'utilisateur dans la base de données
-        $stmt = $pdo->prepare('UPDATE aliment SET nom = ?, type = ? WHERE idAliment = ?');
-        $stmt -> execute([$nom, $type, $idAliment]);
+        $stmt = $pdo->prepare('UPDATE aliment SET nomAliment = ?, type = ? WHERE idAliment = ?');
+        $stmt -> execute([$nomAliment, $type, $idAliment]);
         
         // Envoi de la réponse HTTP
         header('HTTP/1.1 204 No Content');
