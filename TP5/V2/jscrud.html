@@ -113,10 +113,10 @@
                 </div>
             </div>
             <!-- button -->
-            <div class="form-group row">
+            <div class="form-group row" id="buttom">
                 <span class="col-sm-2"></span>
                 <div class="col-sm-2">
-                    <button onclick="onFormSubmit()">Submit</button>
+                    <button onclick="onFormSubmit()" id="submit">Submit</button>
                 </div>
             </div>
         </form>
@@ -230,12 +230,12 @@
                     document.getElementById("inputCheckbox").checked = false;
                 }
                 let id = rowId;
-                $("#addStudentForm").append(`
-                    <div class="form-group row">
-                        <span class="col-sm-2"></span>
-                        <div class="col-sm-2">
-                            <button onclick="modifyRow('${id}')">Modify</button>
-                        </div>
+                document.getElementById("buttom").innerHTML = "";
+                $("#buttom").append(`
+                    <span class="col-sm-2"></span>
+                    <div class="col-sm-2">
+                        <button onclick="modifyRow('${id}')">Modify</button>
+                        <button action="jscrud.html">Return</button>
                     </div>
                 `);
             }
