@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <title>tabletest</title>
+    <script src="config.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tableau de bord</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Liste des aliments</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="addPersonForm" action="" onsubmit="onFormSubmit();">
+        <div class="form-group row">
+            <label for="inputNom" class="col-sm-2 col-form-label">Nom*</label>
+            <div class="col-sm-3">
+                <input type="text" required="true" class="form-control" id="inputNom">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-3">
+                <input type="email" required="true" class="form-control" id="inputEmail">
+            </div>
+            <div class="form-group row">
+                <span class="col-sm-2"></span>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary form-control">Submit</button>
+                </div>
+            </div>
+    </form>
+    
+    <script>
+        let personnes = [];
+        $(document).ready(function () {
+            getAllPersonnes();
+        });
+        function getAllPersonnes() {
+            $.ajax({
+                url: API_BASE_URL,
+                type: "GET",
+                success: function (data) {
+                    console.log(data);
+                    personnes = data;
+                    let tableBody = $("#tableBody");
+                    tableBody.empty();
+                    for (let i = 0; i < personnes.length; i++) {
+                        let personne = personnes[i];
+                        let tr = $("<tr></tr>");
+                        tr.append("<td>" + personne.nom + "</td>");
+                        tr.append("<td>" + personne.email + "</td>");
+                        tr.append("<td><button class='btn btn-danger' onclick='deletePersonne(" + personne.id + ")'>Supprimer</button></td>");
+                        tr.append("<td><button class='btn btn-warning' onclick='modifyPersonne(" + personne.id + ")'>Modifier</button></td>");
+                        tableBody.append(tr);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        function getOnePersonne(id, callback) {
+            $.ajax({
+                url: API_BASE_URL + id,
+                type: "GET",
+                success: function (data) {
+                    console.log(data);
+                    callback(data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        function modifyPersonne(id) {
+            // Récupération de la personne à modifier
+            getOnePersonne(id, function (personne) {
+                // Création du formulaire
+                let form = $("<form></form>");
+
+                // Remplacement de la ligne de la table par le formulaire
+                let tr = $("<tr></tr>");
+                tr.append("<h2> Modifier </h2>");
+                tr.append("<td><input type='text' name='nom'></td><td></td>");
+                tr.append("<td><input type='text' name='email'></td><td></td>");
+                tr.find("td:last").append(form);
+                tr.insertBefore("#tableBody tr:last");
+                // Création du bouton de validation
+                let button = $("<button type='submit' class='btn btn-warning'>Modifier</button> </br>");
+                form.append(button);
+                // Création du bouton d'annulation
+                let buttonCancel = $("<button type='button' class='btn btn-danger'>Annuler</button>");
+                buttonCancel.click(function () {
+                    tr.remove();
+                });
+                form.append(buttonCancel);
+                //remplissage du formulaire avec les données de la personne
+                tr.find("input[name='nom']").val(personne.nom);
+                tr.find("input[name='email']").val(personne.email);
+                // Ajout de l'évènement de soumission du formulaire
+                form.submit(function (event) {
+                    event.preventDefault();
+                    let nom = tr.find("input[name='nom']").val();
+                    let email = tr.find("input[name='email']").val();
+                    let personne = {
+                        nom: nom,
+                        email: email,
+                    };
+                    console.log(personne);
+                    personne = JSON.stringify(personne);
+                    updatePersonne(id, personne);
+                    tr.remove();
+                });
+            });
+        }
+        function updatePersonne(id, personne) {
+            $.ajax({
+                url: API_BASE_URL + id,
+                type: "PUT",
+                contentType: "application/json",
+                data: personne,
+                success: function (data) {
+                    getAllPersonnes();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        function onFormSubmit() {
+            // prevent the form to be sent to the server
+            event.preventDefault();
+            let nom = $("#inputNom").val();
+            let email = $("#inputEmail").val();;
+            let personne = {
+                nom: nom,
+                email: email,
+            };
+            //connvertir le tableau en JSON
+            personne = JSON.stringify(personne);
+            addPersonne(personne);
+        }
+        function addPersonne(personne) {
+            $.ajax({
+                url: API_BASE_URL,
+                type: "POST",
+                data: personne,
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(data);
+                    // clear the form
+                    $("#inputNom").val("");
+                    $("#inputEmail").val("");
+                    // refresh the table
+                    getAllPersonnes();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        function deletePersonne(id) {
+            $.ajax({
+                url: API_BASE_URL + id,
+                type: "DELETE",
+                success: function (data) {
+                    console.log(data);
+                    // refresh the table
+                    $("#tableBody tr:last").remove();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
