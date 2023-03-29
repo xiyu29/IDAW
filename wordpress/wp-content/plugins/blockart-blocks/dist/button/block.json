@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "name": "blockart/button-inner",
+  "title": "Button",
+  "description": "Redirect users to your important pages or websites by clicking button.",
+  "keywords": [ "button", "icon" ],
+  "category": "blockart",
+  "textdomain": "blockart",
+  "parent": [ "blockart/button" ],
+  "supports": {
+    "className": false,
+    "customClassName": false,
+    "reusable": false
+  },
+  "example": {
+    "attributes": {}
+  },
+  "style": "blockart-blocks",
+  "editorScript": "blockart-blocks",
+  "editorStyle": "blockart-blocks-editor"
+}

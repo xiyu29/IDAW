@@ -1,0 +1,82 @@
+== Changelog ==
+= 1.1.4 - 27-02-2023 =
+* Fix         - Flickering issue while using block URL setting.
+* FIx         - Block issue while text is selected among multiple blocks.
+* Enhancement - Tooltip component.
+
+= 1.1.3.1 - 13-12-2022 =
+* Fix - Blocks CSS issue added via customizer.
+
+= 1.1.3 - 08-12-2022 =
+* Fix - Block render issue in widget block editor.
+* Fix - Block css generation issue in customizer.
+* Fix - Possible PHP errors.
+* Fix - Button block focus and active state colors issue.
+
+= 1.1.2 - 22-09-2022 =
+* Enhancement - Optimize dynamic blocks CSS.
+* Fix         - Background image setting not working.
+
+= 1.1.1 - 20-09-2022 =
+* Enhancement - Image block on frontend.
+* Fix         - Slider block control converting decimal to integer.
+* Enhancement - Button block ability to group/stack multiple buttons.
+* Fix         - CSS generation for blocks.
+
+= 1.1.0 - 05-09-2022 =
+* Fix         - Button block icon size and gap settings not working.
+* Enhancement - Inspector control tabs and panels.
+* Fix         - Widget blocks not generating CSS for latest changes.
+* Fix         - Compatibility issue with older version of WordPress.
+
+= 1.0.9 - 23-08-2022 =
+* Update - Minimum required WordPress version to 5.5.
+
+= 1.0.8 - 23-08-2022 =
+* Fix         - Toolbar deprecated warning.
+* Fix         - Library data initial fetch issue.
+* Enhancement - Show library data API connection detail error message.
+
+= 1.0.7 - 08-08-2022 =
+* Tweak - Image block editor improvement.
+* Tweak - Blocks tab inspector control improvement.
+* Fix   - Button block icon alignment issue.
+* Fix   - Template/Section import issue.
+
+= 1.0.6 - 17-06-2022 =
+* Enhancement - Cache library data.
+
+= 1.0.5 - 16-06-2022 =
+* Update      - Readme description.
+* Enhancement - Library data error handling.
+
+= 1.0.4 - 17-06-2022 =
+* Enhancement - BlockArt templates and section library.
+* Update      - Header field `Tested up to`.
+* Fix         - Possible block recovery issue.
+* Fix         - Widget block css issue.
+
+= 1.0.3 - 23-02-2022 =
+* Enhancement - Reusable block CSS.
+* Added       - Review notice.
+
+= 1.0.2 - 25-01-2022 =
+* Fix         - Color palette in WP 5.9.
+* Fix         - Section block in WP 5.9.
+* Fix         - Dynamic CSS issues on editor in WP 5.9.
+* Fix         - Color Picker UI in WP 5.9.
+* Fix         - Library modal design in WP 5.9.
+* Enhancement - Block layouts.
+
+= 1.0.1 - 12-01-2022 =
+* Fix         - Library templates count.
+* Enhancement - Section block alignment support.
+* Enhancement - Widget block CSS generation and loading on frontend.
+* Enhancement - Block settings on widget and customize screens.
+* Fix         - Block recovery issue on widget and customize screens.
+* Enhancement - Copy and paste styles on older version of WordPress.
+* Enhancement - Blocks live preview on customize screen.
+* Enhancement - Section block editor CSS.
+
+= 1.0.0 - 02-12-2021 =
+* Initial release

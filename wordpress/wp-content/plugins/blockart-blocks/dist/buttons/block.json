@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "name": "blockart/button",
+  "title": "Buttons",
+  "description": "Redirect users to your important pages or websites by clicking button.",
+  "keywords": [ "button", "icon" ],
+  "category": "blockart",
+  "textdomain": "blockart",
+  "supports": {
+    "className": false,
+    "customClassName": false,
+    "html": false
+  },
+  "example": {
+    "attributes": {}
+  },
+  "style": "blockart-blocks",
+  "editorScript": "blockart-blocks",
+  "editorStyle": "blockart-blocks-editor"
+}

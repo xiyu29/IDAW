@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "textdomain": "blockart",
+  "title": "Column",
+  "description": "An advanced single column within section block.",
+  "parent": [ "blockart/section" ],
+  "category": "blockart",
+  "name": "blockart/column",
+  "supports": {
+    "className": false,
+    "customClassName": false,
+    "inserter": false,
+    "reusable": false,
+    "html": false
+  },
+  "example": {
+    "attributes": {}
+  },
+  "style": "blockart-blocks",
+  "editorScript": "blockart-blocks",
+  "editorStyle": "blockart-blocks-editor"
+}
