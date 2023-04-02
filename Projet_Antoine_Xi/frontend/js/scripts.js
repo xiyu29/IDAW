@@ -1,4 +1,4 @@
-//index -> button 'se connecter'
+//index.php -> button 'se connecter'
 function connexion(){
     event.preventDefault();
 
@@ -52,7 +52,7 @@ function getSession(){
                 let prenom = data[0].Prenom_personne;
                 let userSessionDiv = document.getElementById("userSession");
                 let p = document.createElement("p");
-                p.textContent = "Hello, " + prenom;//手动输入的球员nom和prenom写反了
+                p.textContent = "Hello, " + prenom;//inversement du nom/prénom pour les utilisateurs entrés manuellements sinon tout ok
                 userSessionDiv.appendChild(p);
             }
             success(data);
