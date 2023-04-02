@@ -1,8 +1,6 @@
 <?php
-
     require_once('template_head.php');
     //require_once('template_menu.php');
-
 ?>
 
 <!-- Header class -->
@@ -11,7 +9,7 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
-                    <h2>Bienvenu</h2>
+                    <h2>Bienvenu, utilisateur!</h2>
                 </div>
             </div>
         </div>
@@ -43,7 +41,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Family name</label>
+                                <label>Nom</label>
                             </td>
                             <td>
                                 <input type="text" id="nom" class="inputText">
@@ -51,7 +49,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Given name</label>
+                                <label>Prénom</label>
                             </td>
                             <td>
                                 <input type="text" id="prenom" class="inputText">
@@ -69,7 +67,7 @@
                             <td>
                             </td>
                             <td align="right">
-                                <button onclick="" class="btn btn-primary" id="submit">Créer</button>
+                                <button onclick="insertUser()" class="btn btn-primary" id="submit">Créer</button>
                             </td>
                         </tr>
                     </table>
@@ -80,7 +78,5 @@
 </div>
 
 <?php
-
     require_once('template_foot.php');
-
 ?>

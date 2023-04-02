@@ -10803,3 +10803,7 @@ header.masthead .post-heading .meta a {
   border-radius: 10px;
   opacity: 0.3;
 }
+
+.table-head {
+  font-weight: bold;
+}
