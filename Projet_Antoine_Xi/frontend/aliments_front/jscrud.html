@@ -3,11 +3,11 @@
 
 <head>
     <meta charset='utf-8'>
+    <script src="config.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <title>tabletest</title>
-    <script src="config.js"></script>
     <script src="jquery-3.6.3.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
@@ -73,28 +73,6 @@
                         }
                     }
                 ]
-            });
-            $.ajax({
-                url: API_BASE_URL,
-                type: "GET",
-                success: function (data) {
-                    console.log(data);
-                    aliments = data;
-                    let tableBody = $("#tableBody");
-                    tableBody.empty();
-                    for (let i = 0; i < aliments.length; i++) {
-                        let aliment = aliments[i];
-                        let tr = $("<tr></tr>");
-                        tr.append("<td>" + aliment.nomAliment + "</td>");
-                        tr.append("<td>" + aliment.type + "</td>");
-                        tr.append("<td><button class='btn btn-danger' onclick='deleteAliment(" + aliment.id + ")'>Supprimer</button></td>");
-                        tr.append("<td><button class='btn btn-warning' onclick='modifyAliment(" + aliment.id + ")'>Modifier</button></td>");
-                        tableBody.append(tr);
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                }
             });
         }
         function getOneAliment(id, callback) {
@@ -182,13 +160,10 @@
             $.ajax({
                 url: API_BASE_URL,
                 type: "POST",
-                data: aliment,
                 contentType: "application/json",
+                data: aliment,
                 success: function (data) {
                     console.log(data);
-                    // clear the form
-                    $("#inputNom").val("");
-                    $("#inputType").val("");
                     // refresh the table
                     getAllAliments();
                 },
@@ -203,7 +178,6 @@
                 type: "DELETE",
                 success: function (data) {
                     console.log(data);
-                    // refresh the table
                     $("#tableBody tr:last").remove();
                 },
                 error: function (error) {

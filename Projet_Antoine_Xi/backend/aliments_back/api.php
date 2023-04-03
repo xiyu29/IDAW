@@ -7,9 +7,7 @@
 
     // Récupération de l'URI
     $uri = $_SERVER['PATH_INFO']; 
-    //print_r($uri);
     $uri = explode('/', $uri);
-    // print_r($uri[1]);
 
     // Parameter of POST request
     $params = json_decode(file_get_contents('php://input'), true);
