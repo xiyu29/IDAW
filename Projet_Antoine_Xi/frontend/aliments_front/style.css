@@ -97,7 +97,7 @@ body {
   
   /* Exemple de section pour votre page */
   .header-section {
-    background-color: #FFFFFF;
+    background-color: #a4e2a2;
     text-align: center;
     padding: 50px;
     margin-bottom: 50px;
@@ -118,7 +118,7 @@ body {
   
   /* Autres exemples de sections pour votre page */
   .features-section {
-    background-color: #FFFFFF;
+    background-color: #b0d6b0;
     padding: 50px;
     margin-bottom: 50px;
     border-radius: 10px;
@@ -126,7 +126,7 @@ body {
   }
   
   .testimonials-section {
-    background-color: #FFFFFF;
+    background-color: #b0d6b0;
     padding: 50px;
     margin-bottom: 50px;
     border-radius: 10px;

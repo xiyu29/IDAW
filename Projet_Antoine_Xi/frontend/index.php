@@ -2,7 +2,6 @@
 
     require_once('template_head.php');
     //require_once('template_menu.php');
-
 ?>
 
         <!-- Navigation-->
@@ -73,7 +72,7 @@
     function newCompte(){
         event.preventDefault();
         console.log("click");
-        window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/newCompte.php";
+        window.location.href = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/frontend/newCompte.php";
     }
 
     function goToPage(url) {
