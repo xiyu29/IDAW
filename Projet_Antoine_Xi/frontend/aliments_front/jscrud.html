@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <title>tabletest</title>
-    <script src="jquery-3.6.3.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 </head>
@@ -26,7 +25,7 @@
         <tbody id="tableBody">
         </tbody>
     </table>
-    <form id="addPersonForm" action="" onsubmit="onFormSubmit();">
+    <form id="addAlimentform" action="" onsubmit="onFormSubmit();">
         <div class="form-group row">
             <label for="inputNom" class="col-sm-2 col-form-label">Nom Aliment*</label>
             <div class="col-sm-3">
@@ -45,9 +44,9 @@
                 </div>
             </div>
     </form>
-    
     <script>
-        let aliments = [];
+        var editor; // use a global for the submit and return data rendering in the examples
+
         $(document).ready(function () {
             getAllAliments();
         });
@@ -93,7 +92,6 @@
             getOneAliment(id, function (aliment) {
                 // Création du formulaire
                 let form = $("<form></form>");
-
                 // Remplacement de la ligne de la table par le formulaire
                 let tr = $("<tr></tr>");
                 tr.append("<h2> Modifier </h2>");
@@ -124,19 +122,19 @@
                     };
                     console.log(aliment);
                     aliment = JSON.stringify(aliment);
-                    updatePersonne(id, aliment);
+                    updateAliment(id, aliment);
                     tr.remove();
                 });
             });
         }
-        function updatePersonne(id, aliment) {
+        function updateAliment(id, aliment) {
             $.ajax({
                 url: API_BASE_URL + id,
                 type: "PUT",
                 contentType: "application/json",
                 data: aliment,
                 success: function (data) {
-                    getAllPersonnes();
+                    getAllAliments();
                 },
                 error: function (error) {
                     console.log(error);
@@ -154,7 +152,7 @@
             };
             //connvertir le tableau en JSON
             aliment = JSON.stringify(aliment);
-            addPersonne(aliment);
+            addAliment(aliment);
         }
         function addAliment(aliment) {
             $.ajax({
@@ -164,8 +162,8 @@
                 data: aliment,
                 success: function (data) {
                     console.log(data);
-                    // refresh the table
-                    getAllAliments();
+                    //add in the table the new element
+                    $('#myTable').DataTable().row.add(data).draw();
                 },
                 error: function (error) {
                     console.log(error);
@@ -174,11 +172,14 @@
         }
         function deleteAliment(id) {
             $.ajax({
-                url: API_BASE_URL + id,
+                url: API_BASE_URL + id,          
                 type: "DELETE",
                 success: function (data) {
                     console.log(data);
-                    $("#tableBody tr:last").remove();
+                    //remove in the table the element with the id
+                    $('#myTable').DataTable(
+                        $('#myTable').DataTable().row('#' + id).remove().draw()
+                    );
                 },
                 error: function (error) {
                     console.log(error);
