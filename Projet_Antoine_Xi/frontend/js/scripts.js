@@ -1,7 +1,7 @@
 const API_BASE_URL = "http://localhost/Projet_Antoine_Xi/backend/api.php";
 
 //index.php -> button 'se connecter'
-function connexion(){
+function connexion() {
     event.preventDefault();
 
     let login = $("#login").val();
@@ -11,47 +11,57 @@ function connexion(){
     params.append('login', login);
     params.append('mdp', mdp);
     params.append('type', 'connexion');
+<<<<<<< HEAD
 
     const url = API_BASE_URL + `/data?${params.toString()}`;
+=======
+    const path = 'http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/'
+    const url = path + `api.php/data?${params.toString()}`;
+    console.log(url);
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            function success(data){
-            //get id correspondant
+            function success(data) {
+                //get id correspondant
                 let id = data[0].Id_personne;
                 console.log(id);
-            //set session
+                //set session
                 sessionStorage.setItem('userId', id);
                 const sessionId = sessionStorage.getItem('userId');
-                window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/homePage.php";
+                window.location.href = path + "frontend/homePage.php";
             }
             success(data);
         })
         .catch(error => {
-            function failed(){
+            function failed() {
                 alert("Veuillez saisir le login et/ou le mot de passe correctement!");
             }
             failed();
         });
-    
+
     //clear all
     document.getElementById("login").value = "";
     document.getElementById("mdp").value = "";
 }
 
 //insert username in homePage.php
-function getSession(){
+function getSession() {
     const sessionId = sessionStorage.getItem('userId');
     const params = new URLSearchParams();
     params.append('id', sessionId);
     params.append('type', 'getName');
+<<<<<<< HEAD
     const url = API_BASE_URL + `/data?${params.toString()}`;
+=======
+    const url = path + `backend/api.php/data?${params.toString()}`;
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            function success(data){
-            //get prenom correspondant
+            function success(data) {
+                //get prenom correspondant
                 let prenom = data[0].Prenom_personne;
                 let userSessionDiv = document.getElementById("userSession");
                 let p = document.createElement("p");
@@ -60,11 +70,11 @@ function getSession(){
             }
             success(data);
         })
-        .catch(error => console.log(error));   
+        .catch(error => console.log(error));
 }
 
 //creation de compte
-function insertUser(){
+function insertUser() {
     event.preventDefault();
 
     let login = $("#login").val();
@@ -73,12 +83,16 @@ function insertUser(){
     let prenom = $("#prenom").val();
     let email = $("#email").val();
 
-    if(login && mdp && nom && prenom && email){
+    if (login && mdp && nom && prenom && email) {
         $.ajax({
+<<<<<<< HEAD
             url: API_BASE_URL,
+=======
+            url: path + "backend/api.php",
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
             method: "POST",
             data: JSON.stringify({
-                nom: nom, 
+                nom: nom,
                 prenom: prenom,
                 email: email,
                 login: login,
@@ -86,16 +100,22 @@ function insertUser(){
                 type: 'newUser',
             }),
             dataType: "json",
+<<<<<<< HEAD
             success: function(data) {
                 alert("Création réussite! Veuillez mettre à jour votre profil.");
                 window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/index.php";
+=======
+            success: function (data) {
+                alert("Création réussite!");
+                window.location.href =  path + "frontend/index.php";
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
             },
-            error: function(error) {
-            console.log(error);
+            error: function (error) {
+                console.log(error);
             }
         });
     }
-    else{
+    else {
         alert("Veuillez entrer tous les champs demandés, merci!");
     }
 
@@ -113,7 +133,11 @@ async function showMeal() {
     const params = new URLSearchParams();
     params.append('id', sessionId);
     params.append('type', 'getMeal');
+<<<<<<< HEAD
     const url = API_BASE_URL + `/data?${params.toString()}`;
+=======
+    const url = path + `backend/api.php/data?${params.toString()}`;
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
     const response = await fetch(url);
     const data = await response.json();
     for (let i = 0; i < data.length; i++) {
@@ -122,7 +146,11 @@ async function showMeal() {
         const params = new URLSearchParams();
         params.append('id_aliment', data[i].Id_aliment);
         params.append('type', 'getNourriture');
+<<<<<<< HEAD
         const url = API_BASE_URL + `/data?${params.toString()}`;
+=======
+        const url = path `backend/api.php/data?${params.toString()}`;
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
         const response = await fetch(url);
         const nourritureData = await response.json();
         let nomAliment = nourritureData[0].nomAliment;
@@ -134,6 +162,7 @@ async function showMeal() {
             </tr>
         `);
     }
+<<<<<<< HEAD
 }
 
 //show all nourritures
@@ -319,4 +348,6 @@ function modificationMdp(){
     else{
         alert("Veuillez saisir le même mot de passe!");
     }
+=======
+>>>>>>> fcc8610b8b2e822b53e5720f26f4f9d4dd017044
 }

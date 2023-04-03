@@ -34,10 +34,70 @@ body {
     margin: 0;
     padding: 0;
   }
+  /* bouton supprimer */
+  .btn-danger {
+    background-color: #d84040;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton modifier */
+  .btn-warning {
+    background-color: #e7a62d;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton ajouter */
+  .btn-success {
+    background-color: #008000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton retour */
+  .btn-primary {
+    background-color: #5959ec;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton retour */
+  .btn-info {
+    background-color: #00FFFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
   
   /* Exemple de section pour votre page */
   .header-section {
-    background-color: #FFFFFF;
+    background-color: #a4e2a2;
     text-align: center;
     padding: 50px;
     margin-bottom: 50px;
@@ -58,7 +118,7 @@ body {
   
   /* Autres exemples de sections pour votre page */
   .features-section {
-    background-color: #FFFFFF;
+    background-color: #b0d6b0;
     padding: 50px;
     margin-bottom: 50px;
     border-radius: 10px;
@@ -66,7 +126,7 @@ body {
   }
   
   .testimonials-section {
-    background-color: #FFFFFF;
+    background-color: #b0d6b0;
     padding: 50px;
     margin-bottom: 50px;
     border-radius: 10px;
