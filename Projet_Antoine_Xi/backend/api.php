@@ -44,6 +44,18 @@
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
 
+                case 'getAllNourriture':
+                    $request = $pdo->prepare("SELECT * FROM aliment ORDER BY idAliment ASC");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+
+                case 'getUser':
+                    $id = $_GET['id'];
+                    $request = $pdo->prepare("SELECT * FROM personne WHERE Id_personne='$id'");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
             }
             break;
 
@@ -64,25 +76,56 @@
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;  
             }
+            break;
             
 
         case 'PUT':
-            // $json = json_decode(file_get_contents('php://input'), true);
-            // $id = $json['id']; 
-            // $name = $json['name'];         
-            // $email = $json['email'];
-            // $givenName = $json['givenName'];         
-            // $aimeCours = $json['aimeCours']; 
-            // $dateNaissance = $json['dateNaissance'];         
-            // $remarque = $json['remarque'];
+            $json = json_decode(file_get_contents('php://input'), true);
+            $type = $json['type'];
 
-            // $request = $pdo->prepare("
-            //     UPDATE users 
-            //     SET name='$name', email='$email',givenName='$givenName',aimeCours='$aimeCours',dateNaissance='$dateNaissance',remarque='$remarque'
-            //     WHERE id='$id'
-            // ");
-            // $request->execute();
+            switch($type){
+                case 'updateProfil':
+                    $id = $json['id']; 
+                    $newNom = $json['newNom'];
+                    $newPrenom = $json['newPrenom'];
+                    $newSport = $json['newSport'];
+                    $newAge = $json['newAge'];
+                    $newSexe = $json['newSexe'];
+                    $newTaille = $json['newTaille'];
+                    $newPoids = $json['newPoids'];
+                    $newEmail = $json['newEmail'];
+
+                    $request = $pdo->prepare("
+                        UPDATE personne 
+                        SET Nom_personne='$newNom',
+                            Prenom_personne='$newPrenom',
+                            Niveau_sport='$newSport',
+                            Tranche_age='$newAge',
+                            Sexe='$newSexe',
+                            Taille='$newTaille',
+                            Poids='$newPoids',
+                            Email_personne='$newEmail'
+                        WHERE Id_personne='$id'
+                    ");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'updateMdp':
+                    $id = $json['id']; 
+                    $nouveauMdp = $json['nouveauMdp'];
+
+                    $request = $pdo->prepare("
+                        UPDATE personne 
+                        SET Mdp='$nouveauMdp'
+                        WHERE Id_personne='$id'
+                    ");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+            }
             break;
+
 
         case 'DELETE':
             // $json = json_decode(file_get_contents('php://input'), true);         

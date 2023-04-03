@@ -6,6 +6,5 @@
     define('_MYSQL_USER','root');
     define('_MYSQL_PASSWORD','');
     define('_API_ADRESS','http://localhost/Projet_Antoine_Xi/backend/api.php');
-    
 
 ?>

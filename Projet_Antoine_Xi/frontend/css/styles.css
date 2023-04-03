@@ -10807,3 +10807,9 @@ header.masthead .post-heading .meta a {
 .table-head {
   font-weight: bold;
 }
+
+.selectStyle {
+  width: 237px;
+  opacity: 0.7;
+  border-radius: 10px;
+}
