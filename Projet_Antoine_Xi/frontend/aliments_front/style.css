@@ -34,6 +34,66 @@ body {
     margin: 0;
     padding: 0;
   }
+  /* bouton supprimer */
+  .btn-danger {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton modifier */
+  .btn-warning {
+    background-color: #FFA500;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton ajouter */
+  .btn-success {
+    background-color: #008000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton retour */
+  .btn-primary {
+    background-color: #0000FF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  /* bouton retour */
+  .btn-info {
+    background-color: #00FFFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
   
   /* Exemple de section pour votre page */
   .header-section {
