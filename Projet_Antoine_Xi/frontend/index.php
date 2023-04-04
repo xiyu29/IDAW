@@ -72,7 +72,7 @@
     function newCompte(){
         event.preventDefault();
         console.log("click");
-        window.location.href = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/frontend/newCompte.php";
+        window.location.href = path +  "frontend/newCompte.php";
     }
 
     function goToPage(url) {

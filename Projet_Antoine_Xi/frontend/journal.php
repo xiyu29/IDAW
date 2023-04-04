@@ -21,7 +21,7 @@
             </table>
             <hr class="my-4" />
             <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="post.html">Ajouter un repas →</a></div>
+            <button onclick="ajoutRepas()" class="btn btn-primary" id="newRepas">Ajouter un repas</button>
         </div>
     </div>
 </div>
@@ -31,5 +31,6 @@
 
 ?>
 <script>
+    getSession();
     showMeal();
 </script>
