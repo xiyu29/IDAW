@@ -32,7 +32,7 @@
 
                 case 'getMeal':
                     $id = $_GET['id'];
-                    $request = $pdo->prepare("SELECT * FROM consommer WHERE Id_personne='$id' ORDER BY Date_conso DESC LIMIT 5");
+                    $request = $pdo->prepare("SELECT * FROM consommer ORDER BY Date_conso DESC");
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
@@ -52,6 +52,13 @@
                 case 'getUser':
                     $id = $_GET['id'];
                     $request = $pdo->prepare("SELECT * FROM personne WHERE Id_personne='$id'");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'getNutriment':
+                    $id = $_GET['id'];
+                    $request = $pdo->prepare("SELECT * FROM nutriment WHERE Id_aliment='$id'");
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;

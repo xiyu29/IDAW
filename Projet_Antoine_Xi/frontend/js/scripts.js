@@ -1,4 +1,5 @@
 const API_BASE_URL = "http://localhost/Projet_Antoine_Xi/backend/api.php";
+const path = "http://localhost/Projet_Antoine_Xi/";
 
 //index.php -> button 'se connecter'
 function connexion() {
@@ -20,9 +21,9 @@ function connexion() {
             function success(data) {
                 //get id correspondant
                 let id = data[0].Id_personne;
-                console.log(id);
                 //set session
                 sessionStorage.setItem('userId', id);
+                console.log(path);
                 const sessionId = sessionStorage.getItem('userId');
                 window.location.href = path + "frontend/homePage.php";
             }
@@ -107,7 +108,7 @@ function insertUser() {
     document.getElementById("email").value = "";
 }
 
-//show 5 first meals
+//show all meals
 async function showMeal() {
     const sessionId = sessionStorage.getItem('userId');
     const params = new URLSearchParams();
@@ -244,6 +245,39 @@ function inputProfil(){
             document.getElementById("inputPoids").innerHTML = '<input type="text" class="inputText posr-meta" value="' + poids + '" id="newPoids"></input>';
             document.getElementById("inputEmail").innerHTML = '<input type="text" class="inputText posr-meta" value="' + email + '" id="newEmail"></input>';
 
+            let select = document.getElementById('newAge');
+            let options = select.querySelectorAll('option');
+            let selectBox = document.getElementById("newAge");
+            for (let i = 0; i < selectBox.options.length; i++) {
+                const option = selectBox.options[i];
+                if (option.value === age) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
+            select = document.getElementById('newSport');
+            options = select.querySelectorAll('option');
+            selectBox = document.getElementById("newSport");
+            for (let i = 0; i < selectBox.options.length; i++) {
+                const option = selectBox.options[i];
+                if (option.value === sport) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
+            select = document.getElementById('newSexe');
+            options = select.querySelectorAll('option');
+            selectBox = document.getElementById("newSexe");
+            for (let i = 0; i < selectBox.options.length; i++) {
+                const option = selectBox.options[i];
+                if (option.value === sexe) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
             console.log(email);
         },
         error: function(error) {
@@ -319,4 +353,93 @@ function modificationMdp(){
     else{
         alert("Veuillez saisir le même mot de passe!");
     }
+}
+
+//affichage de pourcentage de chaque nutriment dans un nourriture
+function showPourcentage(idAliment){
+    // window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/nutrimentPourcentage.php";
+    $.ajax({
+        url: API_BASE_URL + '/data?type=getNutriment&id=' + idAliment,
+        method: "GET",
+        success: function(data) {
+            console.log(data);
+            const Eau = data[0].Eau;
+            const Protéines = data[0].Protéines;
+            const Glucides = data[0].Glucides;
+            const Lipides = data[0].Lipides;
+            const Sucres = data[0].Sucres;
+            const Fructose = data[0].Fructose;
+            const Galactose = data[0].Galactose;
+            const Glucose = data[0].Glucose;
+            const Lactose = data[0].Lactose;
+            const Maltose = data[0].Maltose;
+            const Saccharose = data[0].Saccharose;
+            const Amidon = data[0].EAmidon;
+            const FibresAlimentaires = data[0].FibresAlimentaires;
+            const autres = 100 - Eau - Protéines - Glucides - Lipides - Sucres - Fructose - Galactose - Glucose - Lactose - Maltose - Saccharose - Amidon - FibresAlimentaires;  
+
+            //show graphe 
+            const chartData = {
+                labels: ['Eau', 'Protéines', 'Glucides', 'Lipides', 'Sucres', 'Fructose', 'Galactose', 'Glucose', 'Lactose', 'Maltose', 'Saccharose', 'Amidon', 'Fibres alimentaires', 'autres'],
+                datasets: [{
+                    label: 'Nutriments',
+                    data: [Eau,Protéines,Glucides,Lipides,Sucres,Fructose,Galactose,Glucose,Lactose,Maltose,Saccharose,Amidon,FibresAlimentaires,autres],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.3)',
+                        'rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 206, 86, 0.3)',
+                        'rgba(75, 192, 192, 0.3)',
+                        'rgba(153, 102, 255, 0.3)',
+                        'rgba(255, 159, 64, 0.3)',
+                        'rgba(255, 0, 0, 0.3)',
+                        'rgba(0, 255, 0, 0.3)',
+                        'rgba(0, 0, 255, 0.3)',
+                        'rgba(255, 255, 0, 0.3)',
+                        'rgba(255, 0, 255, 0.3)',
+                        'rgba(0, 255, 255, 0.3)',
+                        'rgba(128, 0, 0, 0.3)',
+                        'rgba(0, 128, 0, 0.3)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 0, 0, 1)',
+                        'rgba(0, 255, 0, 1)',
+                        'rgba(0, 0, 255, 1)',
+                        'rgba(255, 255, 0, 1)',
+                        'rgba(255, 0, 255, 1)',
+                        'rgba(0, 255, 255, 1)',
+                        'rgba(128, 0, 0, 1)',
+                        'rgba(0, 128, 0, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'pie',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Pourcentage(g/100g)'
+                        }
+                    }
+                },
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });  
 }
