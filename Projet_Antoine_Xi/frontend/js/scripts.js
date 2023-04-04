@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost/Projet_Antoine_Xi/backend/api.php";
+const path = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/";
+const API_BASE_URL = path + "backend/api.php";
 
 //index.php -> button 'se connecter'
 function connexion() {
@@ -86,9 +87,9 @@ function insertUser() {
                 type: 'newUser',
             }),
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 alert("Création réussite! Veuillez mettre à jour votre profil.");
-                window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/index.php";
+                window.location.href = path + "frontend/index.php";
             },
             error: function (error) {
                 console.log(error);
@@ -142,12 +143,12 @@ function showAllNourriture() {
     $.ajax({
         url: API_BASE_URL + '/data?type=getAllNourriture',
         method: "GET",
-        success: function(data) {
-            for(const element in data){
+        success: function (data) {
+            for (const element in data) {
                 const idAliment = data[element].idAliment;
                 const nomAliment = data[element].nomAliment;
                 const typeAliment = data[element].type;
-                
+
                 $("#allNourritureBody").append(`
                 <tr>
                     <td width="100px">` + idAliment + `</td>
@@ -156,29 +157,29 @@ function showAllNourriture() {
                 </tr>
                 `);
             }
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#tableAllNourriture').DataTable({
                     paging: true,
-                    pageLength: 15, 
-                    lengthChange: false, 
+                    pageLength: 15,
+                    lengthChange: false,
                 });
             });
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
-    });   
+    });
 }
 
 //affichage de son profil
-function showProfil(){
+function showProfil() {
     document.getElementById("titreProfil").innerHTML = "Mon profil";
     const sessionId = sessionStorage.getItem('userId');
     console.log(sessionId);
     $.ajax({
         url: API_BASE_URL + '/data?type=getUser&id=' + sessionId,
         method: "GET",
-        success: function(data) {
+        success: function (data) {
             const nom = data[0].Nom_personne === null ? 'NULL' : data[0].Nom_personne;
             const prenom = data[0].Prenom_personne === null ? 'NULL' : data[0].Prenom_personne;
             const sport = data[0].Niveau_sport === null ? 'NULL' : data[0].Niveau_sport;
@@ -199,21 +200,21 @@ function showProfil(){
 
             console.log(email);
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
-    });   
+    });
 }
 
 //remplir les trucs pour modifier son profil
-function inputProfil(){
+function inputProfil() {
     document.getElementById("titreProfil").innerHTML = "Mon profil";
     const sessionId = sessionStorage.getItem('userId');
     console.log(sessionId);
     $.ajax({
         url: API_BASE_URL + '/data?type=getUser&id=' + sessionId,
         method: "GET",
-        success: function(data) {
+        success: function (data) {
             const nom = data[0].Nom_personne === null ? 'NULL' : data[0].Nom_personne;
             const prenom = data[0].Prenom_personne === null ? 'NULL' : data[0].Prenom_personne;
             const sport = data[0].Niveau_sport === null ? 'NULL' : data[0].Niveau_sport;
@@ -246,14 +247,14 @@ function inputProfil(){
 
             console.log(email);
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
-    });   
+    });
 }
 
 //confirmation de la modification
-function confirmModification(){
+function confirmModification() {
     const id = sessionStorage.getItem('userId');
     var newNom = document.getElementById("newNom").value;
     var newPrenom = document.getElementById("newPrenom").value;
@@ -280,24 +281,24 @@ function confirmModification(){
             newEmail: newEmail,
         }),
         dataType: "json",
-        success: function() {
+        success: function () {
             alert("Modification réussite!");
-            window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/profil.php";
+            window.location.href = path + "frontend/profil.php";
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
     });
 }
 
 //modification de mdp
-function modificationMdp(){
+function modificationMdp() {
     var nouveauMdp = document.getElementById("nouveauMdp").value;
     var confirmationNouveauMdp = document.getElementById("confirmationNouveauMdp").value;
-    
+
     const id = sessionStorage.getItem('userId');
-    
-    if(nouveauMdp == confirmationNouveauMdp){
+
+    if (nouveauMdp == confirmationNouveauMdp) {
         $.ajax({
             url: API_BASE_URL,
             method: "PUT",
@@ -307,16 +308,116 @@ function modificationMdp(){
                 nouveauMdp: nouveauMdp,
             }),
             dataType: "json",
-            success: function() {
+            success: function () {
                 alert("Modification réussite!");
-                window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/profil.php";
+                window.location.href = path + "frontend/profil.php";
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
     }
-    else{
+    else {
         alert("Veuillez saisir le même mot de passe!");
     }
+}
+async function ajoutRepas() {
+    // Récupérer la liste des aliments
+    const response = await fetch(API_BASE_URL + '/data?type=getNourriture');
+    const nourritureData = await response.json();
+
+    // Créer le formulaire
+    const form = document.createElement('form');
+
+    // Champ date
+    const dateLabel = document.createElement('label');
+    dateLabel.textContent = 'Date : ';
+    const dateSelect = document.createElement('select');
+    for (let i = 0; i < 7; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const option = document.createElement('option');
+        option.value = date.toISOString().slice(0, 10);
+        option.textContent = date.toLocaleDateString();
+        dateSelect.appendChild(option);
+    }
+    form.appendChild(dateLabel);
+    form.appendChild(dateSelect);
+    form.appendChild(document.createElement('br'));
+
+    // Champ nourriture
+    const nourritureLabel = document.createElement('label');
+    nourritureLabel.textContent = 'Nourriture : ';
+    const nourritureSelect = document.createElement('select');
+    for (let i = 0; i < nourritureData.length; i++) {
+        const option = document.createElement('option');
+        option.value = nourritureData[i].Id_aliment;
+        option.textContent = nourritureData[i].nomAliment;
+        nourritureSelect.appendChild(option);
+    }
+    form.appendChild(nourritureLabel);
+    form.appendChild(nourritureSelect);
+    form.appendChild(document.createElement('br'));
+
+    // Champ quantité
+    const quantiteLabel = document.createElement('label');
+    quantiteLabel.textContent = 'Quantité : ';
+    const quantiteInput = document.createElement('input');
+    quantiteInput.type = 'number';
+    quantiteInput.min = 0;
+    quantiteInput.step = 0.1;
+    quantiteInput.required = true;
+    form.appendChild(quantiteLabel);
+    form.appendChild(quantiteInput);
+    form.appendChild(document.createElement('br'));
+
+    // Bouton soumettre
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.textContent = 'Ajouter';
+    form.appendChild(submitButton);
+
+    // Ajouter le formulaire à la page
+    const repasDiv = document.getElementById('newRepas');
+    repasDiv.insertAdjacentElement('afterend', form);
+
+    // Soumettre le formulaire
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const date = dateSelect.value;
+        const nourritureId = nourritureSelect.value;
+        const quantite = parseFloat(quantiteInput.value);
+
+        // Créer un objet avec les valeurs à envoyer
+        const repas = {
+            date: date,
+            nourritureId: nourritureId,
+            quantite: quantite
+        };
+
+        // Convertir l'objet en chaîne de caractères JSON
+        const repasJson = JSON.stringify(repas);
+
+        // Envoyer la requête pour ajouter le repas
+        const sessionId = sessionStorage.getItem('userId');
+        const url = API_BASE_URL + '/data?type=addRepas';
+        const response = await fetch(url, {
+            method: 'POST',
+            body: repasJson,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+
+        // Afficher le nouveau repas
+        $("#nourritureBody").prepend(`
+      <tr>
+        <td width="150px">` + date + `</td>
+          <td width="150px">` + nourritureData[nourritureId - 1].nomAliment + `</td>
+          <td width="150px">` + quantite + `</td>
+      </tr>
+      `);
+    });
+
 }
