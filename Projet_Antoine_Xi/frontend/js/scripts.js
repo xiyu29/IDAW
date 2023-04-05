@@ -139,38 +139,38 @@ async function showMeal() {
 }
 
 //show all nourritures
-function showAllNourriture() {
-    // event.preventDefault();
-    $.ajax({
-        url: API_BASE_URL + '/data?type=getAllNourriture',
-        method: "GET",
-        success: function (data) {
-            for (const element in data) {
-                const idAliment = data[element].idAliment;
-                const nomAliment = data[element].nomAliment;
-                const typeAliment = data[element].type;
+// function showAllNourriture() {
+//     // event.preventDefault();
+//     $.ajax({
+//         url: API_BASE_URL + '/data?type=getAllNourriture',
+//         method: "GET",
+//         success: function (data) {
+//             for (const element in data) {
+//                 const idAliment = data[element].idAliment;
+//                 const nomAliment = data[element].nomAliment;
+//                 const typeAliment = data[element].type;
 
-                $("#allNourritureBody").append(`
-                <tr>
-                    <td width="100px">` + idAliment + `</td>
-                    <td width="800px">` + nomAliment + `</td>
-                    <td width="600px">` + typeAliment + `</td>
-                </tr>
-                `);
-            }
-            $(document).ready(function () {
-                $('#tableAllNourriture').DataTable({
-                    paging: true,
-                    pageLength: 15,
-                    lengthChange: false,
-                });
-            });
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
+//                 $("#allNourritureBody").append(`
+//                 <tr>
+//                     <td width="100px">` + idAliment + `</td>
+//                     <td width="800px">` + nomAliment + `</td>
+//                     <td width="600px">` + typeAliment + `</td>
+//                 </tr>
+//                 `);
+//             }
+//             $(document).ready(function () {
+//                 $('#tableAllNourriture').DataTable({
+//                     paging: true,
+//                     pageLength: 15,
+//                     lengthChange: false,
+//                 });
+//             });
+//         },
+//         error: function (error) {
+//             console.log(error);
+//         }
+//     });
+// }
 
 //affichage de son profil
 function showProfil() {
@@ -545,3 +545,47 @@ async function ajoutRepas() {
 
 }
 
+//show all repas
+async function showAllRepas() {
+    const sessionId = sessionStorage.getItem('userId');
+    const params = new URLSearchParams();
+
+    params.append('id', sessionId);
+    params.append('type', 'getMeal');
+
+    const url = API_BASE_URL + `/data?${params.toString()}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log(data);
+
+    const table = $('#tableRepas').DataTable();
+
+    for (let i = 0; i < data.length; i++) {
+        let date_conso = data[i].Date_conso;
+        let quantite = data[i].Quantite;
+
+        //fonction 1
+        const params = new URLSearchParams();
+        params.append('id_aliment', data[i].Id_aliment);
+        params.append('type', 'getNourriture');
+
+        const url = API_BASE_URL + `/data?${params.toString()}`;
+        const response = await fetch(url);
+        const nourritureData = await response.json();
+        let nomAliment = nourritureData[0].nomAliment;
+
+        //fonction 2
+        const Params = new URLSearchParams();
+        Params.append('id_aliment', data[i].Id_aliment);
+        Params.append('type', 'getEnergie');
+
+        const Url = API_BASE_URL + `/data?${Params.toString()}`;
+        const Response = await fetch(Url);
+        const NourritureData = await Response.json();
+        let energieAliment = NourritureData[0].Energie;
+        let energie = energieAliment * quantite / 100;
+        
+        table.row.add([date_conso, nomAliment, quantite, energie]).draw();
+    }
+}

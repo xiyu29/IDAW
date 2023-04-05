@@ -29,14 +29,15 @@
                         <td width="150px">Date</td>
                         <td width="400px">Nourriture</td>
                         <td width="150px">Quantité/g</td>
+                        <td width="150px">Energie/kj</td>
                     </tr>    
                 </thead>
                 <tbody  align="center" id="nourritureBody"></tbody>
             </table>
             <hr class="my-4" />
             <!-- Pager-->
-            <!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="post.html">Plus repas →</a></div> -->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="journal.php">Plus repas →</a></div>
+            <!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="journal.php">Plus repas →</a></div> -->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/ajoutRepas.php">Ajouter un repas →</a></div>
         </div>
     </div>
 </div>
@@ -49,14 +50,18 @@
 
 <script>
     getSession();
-    showMeal();
+    showAllRepas();
 
     $(document).ready(function() {
         $('#tableRepas').DataTable({
             "pageLength": 5,
             "lengthChange": false,
-            "dom": 'lrtip'
+            "order": [[0, "desc"]],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/French.json"
+            }
+            // "dom": 'lrtip'
         });
     });
-
+    
 </script>

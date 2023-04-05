@@ -37,6 +37,6 @@
 ?>
 
 <script>
-    showPourcentage(666);
+    showPourcentage(1500);
 </script>
 

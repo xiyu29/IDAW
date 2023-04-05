@@ -38,6 +38,7 @@
                     break;
 
                 case 'getNourriture':
+
                     $id_aliment = $_GET['id_aliment'];
                     $request = $pdo->prepare("SELECT nomAliment FROM aliment WHERE idAliment='$id_aliment'");
                     $request->execute();
@@ -61,6 +62,14 @@
                     $request = $pdo->prepare("SELECT * FROM nutriment WHERE Id_aliment='$id'");
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'getEnergie':
+                    $id = $_GET['id_aliment'];
+                    $request = $pdo->prepare("SELECT Energie FROM nutriment WHERE Id_aliment='$id'");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    // echo $resultat;
                     break;
 
             }
