@@ -25,48 +25,35 @@
                     <table align="center">
                         <tr>
                             <td>
-                                <label>Login</label>
+                                <label>Date</label>
                             </td>
                             <td>
-                                <input type="text" id="login" class="inputText">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Mot de passe</label>
-                            </td>
-                            <td>
-                                <input type="text" id="mdp" class="inputText">
+                                <!-- Calendrier qui renvoie au format date -->
+                                <input type="date" id="date" class="inputText">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Nom</label>
+                                <label>Aliment du repas </label>
                             </td>
                             <td>
-                                <input type="text" id="nom" class="inputText">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Prénom</label>
-                            </td>
-                            <td>
-                                <input type="text" id="prenom" class="inputText">
+                                <!-- liste déroulante de tous les aliments dans la base de données-->
+                                <select name="repas" id="repas">
+
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Email</label>
+                                <label>Quantité en grammes :</label>
                             </td>
                             <td>
-                                <input type="text" id="email" class="inputText">
+                                <input type="text" id="quantité" class="inputText">
                             </td>
                         </tr>
                     </table>
                 </form>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/homePage.php">←Revenir</a></div>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/ajoutRepas.php">Ajouter→</a></div>
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./homePage.php">←Revenir</a></div>
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./ajoutRepas.php">Ajouter→</a></div>
             </span>
         </div>
     </div>

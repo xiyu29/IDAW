@@ -1,6 +1,4 @@
-<?php
-    require_once('template_menu.php');
-?>
+
 
 <!doctype html>
 <html lang="fr">
@@ -53,6 +51,8 @@
                     <button type="submit" class="btn btn-primary form-control">Submit</button>
                 </div>
             </div>
+			<br>
+			<div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./homePage.php">← Retour </a></div>
     </form>
     <script>
         var editor; // use a global for the submit and return data rendering in the examples
