@@ -3,12 +3,11 @@
 
 <head>
     <meta charset='utf-8'>
+    <link rel="stylesheet" type="text/css" href="./aliments_front/style.css">
     <script src="./aliments_front/config.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="./aliments_front/style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <title>tabletest</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 </head>
 
@@ -25,29 +24,28 @@
         <tbody id="tableBody">
         </tbody>
     </table>
-    <form id="addPersonForm" action="" onsubmit="onFormSubmit();">
+    <form id="addAlimentform" action="" onsubmit="onFormSubmit();">
         <div class="form-group row">
-            <label for="inputNom" class="col-sm-2 col-form-label">Nom Aliment*</label>
+            <label for="inputNom" class="col-sm-2 col-form-label">Nom Aliment</label>
             <div class="col-sm-3">
                 <input type="text" required="true" class="form-control" id="inputNom">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputType" class="col-sm-2 col-form-label">Type  </label>
+            <label for="inputType" class="col-sm-2 col-form-label">Type </label>
             <div class="col-sm-3">
-                <input type="text" required="true" class="form-control" id="inputType" >
+                <input type="text" required="true" class="form-control" id="inputType">
             </div>
             <div class="form-group row">
                 <span class="col-sm-2"></span>
                 <div class="col-sm-2">
-                    <br>
                     <button type="submit" class="btn btn-primary form-control">Submit</button>
                 </div>
             </div>
     </form>
-    
     <script>
-        let aliments = [];
+        var editor; // use a global for the submit and return data rendering in the examples
+
         $(document).ready(function () {
             getAllAliments();
         });
@@ -63,7 +61,7 @@
                     {
                         "data": "idAliment",
                         "render": function (data) {
-                            return "<button class='btn btn-danger' onclick='deleteAliment(" + data + ")'>Supprimer</button>";
+                            return "<button class='btn btn-danger' onclick='deleteAliment(" + data + ")'>Supprimer</button>";                            
                         }
                     },
                     {
@@ -75,6 +73,7 @@
                 ]
             });
         }
+
         function getOneAliment(id, callback) {
             $.ajax({
                 url: API_BASE_URL + id,
@@ -93,14 +92,13 @@
             getOneAliment(id, function (aliment) {
                 // Création du formulaire
                 let form = $("<form></form>");
-
                 // Remplacement de la ligne de la table par le formulaire
                 let tr = $("<tr></tr>");
                 tr.append("<h2> Modifier </h2>");
                 tr.append("<td><input type='text' name='nomAliment'></td><td></td>");
                 tr.append("<td><input type='text' name='type'></td><td></td>");
                 tr.find("td:last").append(form);
-                tr.insertBefore("#tableBody tr:last");
+                tr.insertAfter("#tableBody tr:last");
                 // Création du bouton de validation
                 let button = $("<button type='submit' class='btn btn-warning'>Modifier</button> </br>");
                 form.append(button);
@@ -110,7 +108,7 @@
                     tr.remove();
                 });
                 form.append(buttonCancel);
-                //remplissage du formulaire avec les données de l'aliment
+                //préremplissage du formulaire avec les données de l'aliment
                 tr.find("input[name='nomAliment']").val(aliment.nomAliment);
                 tr.find("input[name='type']").val(aliment.type);
                 // Ajout de l'évènement de soumission du formulaire
@@ -124,19 +122,21 @@
                     };
                     console.log(aliment);
                     aliment = JSON.stringify(aliment);
-                    updatePersonne(id, aliment);
+                    updateAliment(id, aliment);
                     tr.remove();
                 });
             });
         }
-        function updatePersonne(id, aliment) {
+        function updateAliment(id, aliment) {
             $.ajax({
                 url: API_BASE_URL + id,
                 type: "PUT",
                 contentType: "application/json",
                 data: aliment,
                 success: function (data) {
-                    getAllPersonnes();
+                    console.log("data updated");
+                    //refresh the table
+                    $('#myTable').DataTable().ajax.reload();
                 },
                 error: function (error) {
                     console.log(error);
@@ -154,7 +154,7 @@
             };
             //connvertir le tableau en JSON
             aliment = JSON.stringify(aliment);
-            addPersonne(aliment);
+            addAliment(aliment);
         }
         function addAliment(aliment) {
             $.ajax({
@@ -162,10 +162,10 @@
                 type: "POST",
                 contentType: "application/json",
                 data: aliment,
-                success: function (data) {
-                    console.log(data);
-                    // refresh the table
-                    getAllAliments();
+                success: function () {
+                    console.log("data added");
+                    //refresh the table
+                    $('#myTable').DataTable().ajax.reload();
                 },
                 error: function (error) {
                     console.log(error);
@@ -173,17 +173,21 @@
             });
         }
         function deleteAliment(id) {
+            const url = API_BASE_URL + id;
+            console.log(id);
             $.ajax({
-                url: API_BASE_URL + id,
+                url: url,
                 type: "DELETE",
-                success: function (data) {
-                    console.log(data);
-                    $("#tableBody tr:last").remove();
+                success: function () {
+                    console.log("deleted");
+                    //remove in the table the element with the id
+                    $('#myTable').DataTable().ajax.reload();
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
+            console.log(url);
         }
 
     </script>
