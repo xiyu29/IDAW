@@ -91,6 +91,16 @@
                     $request->execute();         
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;  
+                case 'newRepas' :
+                    $json = json_decode(file_get_contents('php://input'), true);         
+                    $id = $json['id'];         
+                    $date = $json['date'];         
+                    $aliment = $json['aliment'];         
+                    $quantite = $json['quantite'];         
+                    $request = $pdo->prepare("INSERT INTO consommer (Id_personne, Id_aliment, Date_conso, Quantite) VALUES ('$id', '$aliment', '$date' , '$quantite')");         
+                    $request->execute();         
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
             }
             break;
             

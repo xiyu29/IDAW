@@ -55,7 +55,6 @@
 			<div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./homePage.php">← Retour </a></div>
     </form>
     <script>
-        var editor; // use a global for the submit and return data rendering in the examples
 
         $(document).ready(function () {
             getAllAliments();

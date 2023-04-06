@@ -1,6 +1,6 @@
 <?php
-    require_once('template_head.php');
-    //require_once('template_menu.php');
+require_once('template_head.php');
+//require_once('template_menu.php');
 ?>
 
 <!-- Header class -->
@@ -52,13 +52,60 @@
                         </tr>
                     </table>
                 </form>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./homePage.php">←Revenir</a></div>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./ajoutRepas.php">Ajouter→</a></div>
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase"
+                        href="./homePage.php">←Revenir</a></div>
+                <button onclick="ajoutRepas()" class="btn btn-primary" id="submit">Ajouter</button>
             </span>
         </div>
     </div>
 </div>
 
+<script>
+    $(document).ready(function () { getAllAliments(); });
+    //fonction qui récupère tous les aliments de la base de données
+    function getAllAliments() {
+        $.ajax({
+            url: "../backend/aliments_back/api.php/",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var options = '';
+                $.each(data, function (index, value) {
+                    options += '<option value="' + value.idAliment + '">' + value.nomAliment + '</option>';
+                });
+                $('#repas').append(options);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    //fonction qui ajoute un repas à la base de données
+    function ajoutRepas() {
+        var date = $('#date').val();
+        var repas = $('#repas').val();
+        var quantité = $('#quantité').val();
+        $.ajax({
+            url: "../backend/api.php/newRepas",
+            type: "POST",   
+            dataType: "json",
+            data: {
+                "date": date,
+                //selectionne l'id de l'aliment dans la liste déroulante
+                "repas": repas,
+                "quantité": quantité
+            },
+            success: function (data) {
+                console.log(data);
+                alert("Repas ajouté");
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+</script>
 <?php
-    require_once('template_foot.php');
+require_once('template_foot.php');
 ?>

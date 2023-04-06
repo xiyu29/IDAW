@@ -444,106 +444,110 @@ function showPourcentage(idAliment) {
         }
     });
 }
-async function ajoutRepas() {
-    // Récupérer la liste des aliments
-    const response = await fetch(API_BASE_URL + '/data?type=getNourriture');
-    const nourritureData = await response.json();
+// async function ajoutRepas() {
 
-    // Créer le formulaire
-    const form = document.createElement('form');
+//     // récupérer la liste des aliments dans la base de données
+//     const response2 = await fetch(API_BASE_URL + '/data?type=getNourriture&id=' + id);
+//     const nourritureData2 = await response2.json();
+//     //afficher une liste déroulante des aliments
+//     const form = document.getElementById('form');
+//     form.innerHTML = '';
 
-    // Champ date
-    const dateLabel = document.createElement('label');
-    dateLabel.textContent = 'Date : ';
-    const dateSelect = document.createElement('select');
-    for (let i = 0; i < 7; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        const option = document.createElement('option');
-        option.value = date.toISOString().slice(0, 10);
-        option.textContent = date.toLocaleDateString();
-        dateSelect.appendChild(option);
-    }
-    form.appendChild(dateLabel);
-    form.appendChild(dateSelect);
-    form.appendChild(document.createElement('br'));
 
-    // Champ nourriture
-    const nourritureLabel = document.createElement('label');
-    nourritureLabel.textContent = 'Nourriture : ';
-    const nourritureSelect = document.createElement('select');
-    for (let i = 0; i < nourritureData.length; i++) {
-        const option = document.createElement('option');
-        option.value = nourritureData[i].Id_aliment;
-        option.textContent = nourritureData[i].nomAliment;
-        nourritureSelect.appendChild(option);
-    }
-    form.appendChild(nourritureLabel);
-    form.appendChild(nourritureSelect);
-    form.appendChild(document.createElement('br'));
 
-    // Champ quantité
-    const quantiteLabel = document.createElement('label');
-    quantiteLabel.textContent = 'Quantité : ';
-    const quantiteInput = document.createElement('input');
-    quantiteInput.type = 'number';
-    quantiteInput.min = 0;
-    quantiteInput.step = 0.1;
-    quantiteInput.required = true;
-    form.appendChild(quantiteLabel);
-    form.appendChild(quantiteInput);
-    form.appendChild(document.createElement('br'));
 
-    // Bouton soumettre
-    const submitButton = document.createElement('button');
-    submitButton.type = 'submit';
-    submitButton.textContent = 'Ajouter';
-    form.appendChild(submitButton);
+//     // Champ date
+//     const dateLabel = document.createElement('label');
+//     dateLabel.textContent = 'Date : ';
+//     const dateSelect = document.createElement('select');
+//     for (let i = 0; i < 7; i++) {
+//         const date = new Date();
+//         date.setDate(date.getDate() - i);
+//         const option = document.createElement('option');
+//         option.value = date.toISOString().slice(0, 10);
+//         option.textContent = date.toLocaleDateString();
+//         dateSelect.appendChild(option);
+//     }
+//     form.appendChild(dateLabel);
+//     form.appendChild(dateSelect);
+//     form.appendChild(document.createElement('br'));
 
-    // Ajouter le formulaire à la page
-    const repasDiv = document.getElementById('newRepas');
-    repasDiv.insertAdjacentElement('afterend', form);
+//     // Champ nourriture
+//     const nourritureLabel = document.createElement('label');
+//     nourritureLabel.textContent = 'Nourriture : ';
+//     const nourritureSelect = document.createElement('select');
+//     for (let i = 0; i < nourritureData.length; i++) {
+//         const option = document.createElement('option');
+//         option.value = nourritureData[i].Id_aliment;
+//         option.textContent = nourritureData[i].nomAliment;
+//         nourritureSelect.appendChild(option);
+//     }
+//     form.appendChild(nourritureLabel);
+//     form.appendChild(nourritureSelect);
+//     form.appendChild(document.createElement('br'));
 
-    // Soumettre le formulaire
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const date = dateSelect.value;
-        const nourritureId = nourritureSelect.value;
-        const quantite = parseFloat(quantiteInput.value);
+//     // Champ quantité
+//     const quantiteLabel = document.createElement('label');
+//     quantiteLabel.textContent = 'Quantité : ';
+//     const quantiteInput = document.createElement('input');
+//     quantiteInput.type = 'number';
+//     quantiteInput.min = 0;
+//     quantiteInput.step = 0.1;
+//     quantiteInput.required = true;
+//     form.appendChild(quantiteLabel);
+//     form.appendChild(quantiteInput);
+//     form.appendChild(document.createElement('br'));
 
-        // Créer un objet avec les valeurs à envoyer
-        const repas = {
-            date: date,
-            nourritureId: nourritureId,
-            quantite: quantite
-        };
+//     // Bouton soumettre
+//     const submitButton = document.createElement('button');
+//     submitButton.type = 'submit';
+//     submitButton.textContent = 'Ajouter';
+//     form.appendChild(submitButton);
 
-        // Convertir l'objet en chaîne de caractères JSON
-        const repasJson = JSON.stringify(repas);
+//     // Ajouter le formulaire à la page
+//     const repasDiv = document.getElementById('newRepas');
+//     repasDiv.insertAdjacentElement('afterend', form);
 
-        // Envoyer la requête pour ajouter le repas
-        const sessionId = sessionStorage.getItem('userId');
-        const url = API_BASE_URL + '/data?type=addRepas';
-        const response = await fetch(url, {
-            method: 'POST',
-            body: repasJson,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const data = await response.json();
+//     // Soumettre le formulaire
+//     form.addEventListener('submit', async (event) => {
+//         event.preventDefault();
+//         const date = dateSelect.value;
+//         const nourritureId = nourritureSelect.value;
+//         const quantite = parseFloat(quantiteInput.value);
 
-        // Afficher le nouveau repas
-        $("#nourritureBody").prepend(`
-      <tr>
-        <td width="150px">` + date + `</td>
-          <td width="150px">` + nourritureData[nourritureId - 1].nomAliment + `</td>
-          <td width="150px">` + quantite + `</td>
-      </tr>
-      `);
-    });
+//         // Créer un objet avec les valeurs à envoyer
+//         const repas = {
+//             date: date,
+//             nourritureId: nourritureId,
+//             quantite: quantite
+//         };
 
-}
+//         // Convertir l'objet en chaîne de caractères JSON
+//         const repasJson = JSON.stringify(repas);
+
+//         // Envoyer la requête pour ajouter le repas
+//         const sessionId = sessionStorage.getItem('userId');
+//         const url = API_BASE_URL + '/data?type=addRepas';
+//         const response = await fetch(url, {
+//             method: 'POST',
+//             body: repasJson,
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
+//         const data = await response.json();
+
+//         // Afficher le nouveau repas
+//         $("#nourritureBody").prepend(`
+//       <tr>
+//         <td width="150px">` + date + `</td>
+//           <td width="150px">` + nourritureData[nourritureId - 1].nomAliment + `</td>
+//           <td width="150px">` + quantite + `</td>
+//       </tr>
+//       `);
+//     });
+
+// }
 
 // //show all repas
 // async function showAllRepas() {

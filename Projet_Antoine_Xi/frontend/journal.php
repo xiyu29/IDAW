@@ -21,7 +21,7 @@
             </table>
             <hr class="my-4" />
             <!-- Pager-->
-            <button onclick="ajoutRepas()" class="btn btn-primary" id="newRepas">Ajouter un repas</button>
+            <button class="btn btn-primary" id="newRepas">Ajouter un repas</button>
         </div>
     </div>
 </div>
