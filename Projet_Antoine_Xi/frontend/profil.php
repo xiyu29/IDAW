@@ -2,6 +2,7 @@
 
     require_once('template_head.php');
     require_once('template_menu.php');
+    require_once('config.php');
     
 ?>
 
@@ -62,8 +63,8 @@
                 <h4 class="post-subtitle">Email</h4>
                 <p class="post-meta" id="emailProfil"></p>
             </div>
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/frontend/modificationProfil.php">Modifier mon profil</a></div>
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/frontend/modificationMdp.php">Modifier mon mot de passe</a></div>
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href= $path + "frontend/modificationProfil.php">Modifier mon profil</a></div>
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href= path + "frontend/modificationMdp.php">Modifier mon mot de passe</a></div>
         </div>
     </div>
 </div>
