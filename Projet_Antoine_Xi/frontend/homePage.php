@@ -41,7 +41,7 @@
             <hr class="my-4" />
             <!-- Pager-->
             <!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="journal.php">Plus repas →</a></div> -->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/ajoutRepas.php">Ajouter un repas →</a></div>
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="./ajoutRepas.php">Ajouter un repas →</a></div>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <?php
-    require_once('template_head.php');
-    //require_once('template_menu.php');
+require_once('template_head.php');
+//require_once('template_menu.php');
 ?>
 
 <!-- Header class -->
@@ -25,53 +25,92 @@
                     <table align="center">
                         <tr>
                             <td>
-                                <label>Login</label>
+                                <label>Date</label>
                             </td>
                             <td>
-                                <input type="text" id="login" class="inputText">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Mot de passe</label>
-                            </td>
-                            <td>
-                                <input type="text" id="mdp" class="inputText">
+                                <!-- Calendrier qui renvoie au format date -->
+                                <input type="date" id="date" class="inputText">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Nom</label>
+                                <label>Aliment du repas </label>
                             </td>
                             <td>
-                                <input type="text" id="nom" class="inputText">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Prénom</label>
-                            </td>
-                            <td>
-                                <input type="text" id="prenom" class="inputText">
+                                <!-- liste déroulante de tous les aliments dans la base de données-->
+                                <select name="repas" id="repas">
+
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Email</label>
+                                <label>Quantité en grammes :</label>
                             </td>
                             <td>
-                                <input type="text" id="email" class="inputText">
+                                <input type="text" id="quantité" class="inputText">
                             </td>
                         </tr>
                     </table>
                 </form>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/homePage.php">←Revenir</a></div>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/ajoutRepas.php">Ajouter→</a></div>
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase"
+                        href="./homePage.php">←Revenir</a></div>
+                <button onclick="ajoutRepas()" class="btn btn-primary" id="submit">Ajouter</button>
             </span>
         </div>
     </div>
 </div>
 
+<script>
+    $(document).ready(function () { getAllAliments(); });
+    //fonction qui récupère tous les aliments de la base de données
+    function getAllAliments() {
+        $.ajax({
+            url: "../backend/aliments_back/api.php/",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var options = '';
+                $.each(data, function (index, value) {
+                    options += '<option value="' + value.idAliment + '">' + value.nomAliment + '</option>';                    
+                });
+                $('#repas').append(options);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    //fonction qui ajoute un repas à la base de données
+    function ajoutRepas() {
+        const id = sessionStorage.getItem('userId');
+        //print id
+        console.log(id);
+        var date = $('#date').val();
+        var repas = $('#repas').val();        
+        var quantité = $('#quantité').val();
+        $.ajax({
+            url: "../backend/api.php/newRepas",
+            method : "POST",
+            data: JSON.stringify({
+                type: 'newRepas',
+                //id de l'utilisateur connecté
+                "Id_personne": id,
+                "Id_aliment": repas,
+                "Date_conso": date,
+                "Quantite": quantité
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                alert("Repas ajouté");
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+</script>
 <?php
-    require_once('template_foot.php');
+require_once('template_foot.php');
 ?>

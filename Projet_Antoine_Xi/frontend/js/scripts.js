@@ -1,5 +1,5 @@
-const API_BASE_URL = "http://localhost/Projet_Antoine_Xi/backend/api.php";
-const path = "http://localhost/Projet_Antoine_Xi/";
+const API_BASE_URL = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/backend/api.php";
+const path = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/";
 
 
 //index.php -> button 'se connecter'
@@ -357,12 +357,12 @@ function modificationMdp() {
 }
 
 //affichage de pourcentage de chaque nutriment dans un nourriture
-function showPourcentage(idAliment){
+function showPourcentage(idAliment) {
     // window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/nutrimentPourcentage.php";
     $.ajax({
         url: API_BASE_URL + '/data?type=getNutriment&id=' + idAliment,
         method: "GET",
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             const Eau = data[0].Eau;
             const Protéines = data[0].Protéines;
@@ -377,14 +377,14 @@ function showPourcentage(idAliment){
             const Saccharose = data[0].Saccharose;
             const Amidon = data[0].EAmidon;
             const FibresAlimentaires = data[0].FibresAlimentaires;
-            const autres = 100 - Eau - Protéines - Glucides - Lipides - Sucres - Fructose - Galactose - Glucose - Lactose - Maltose - Saccharose - Amidon - FibresAlimentaires;  
+            const autres = 100 - Eau - Protéines - Glucides - Lipides - Sucres - Fructose - Galactose - Glucose - Lactose - Maltose - Saccharose - Amidon - FibresAlimentaires;
 
             //show graphe 
             const chartData = {
                 labels: ['Eau', 'Protéines', 'Glucides', 'Lipides', 'Sucres', 'Fructose', 'Galactose', 'Glucose', 'Lactose', 'Maltose', 'Saccharose', 'Amidon', 'Fibres alimentaires', 'autres'],
                 datasets: [{
                     label: 'Nutriments',
-                    data: [Eau,Protéines,Glucides,Lipides,Sucres,Fructose,Galactose,Glucose,Lactose,Maltose,Saccharose,Amidon,FibresAlimentaires,autres],
+                    data: [Eau, Protéines, Glucides, Lipides, Sucres, Fructose, Galactose, Glucose, Lactose, Maltose, Saccharose, Amidon, FibresAlimentaires, autres],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.3)',
                         'rgba(54, 162, 235, 0.3)',
@@ -439,111 +439,115 @@ function showPourcentage(idAliment){
                 },
             });
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
-    });  
-}
-async function ajoutRepas() {
-    // Récupérer la liste des aliments
-    const response = await fetch(API_BASE_URL + '/data?type=getNourriture');
-    const nourritureData = await response.json();
-
-    // Créer le formulaire
-    const form = document.createElement('form');
-
-    // Champ date
-    const dateLabel = document.createElement('label');
-    dateLabel.textContent = 'Date : ';
-    const dateSelect = document.createElement('select');
-    for (let i = 0; i < 7; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        const option = document.createElement('option');
-        option.value = date.toISOString().slice(0, 10);
-        option.textContent = date.toLocaleDateString();
-        dateSelect.appendChild(option);
-    }
-    form.appendChild(dateLabel);
-    form.appendChild(dateSelect);
-    form.appendChild(document.createElement('br'));
-
-    // Champ nourriture
-    const nourritureLabel = document.createElement('label');
-    nourritureLabel.textContent = 'Nourriture : ';
-    const nourritureSelect = document.createElement('select');
-    for (let i = 0; i < nourritureData.length; i++) {
-        const option = document.createElement('option');
-        option.value = nourritureData[i].Id_aliment;
-        option.textContent = nourritureData[i].nomAliment;
-        nourritureSelect.appendChild(option);
-    }
-    form.appendChild(nourritureLabel);
-    form.appendChild(nourritureSelect);
-    form.appendChild(document.createElement('br'));
-
-    // Champ quantité
-    const quantiteLabel = document.createElement('label');
-    quantiteLabel.textContent = 'Quantité : ';
-    const quantiteInput = document.createElement('input');
-    quantiteInput.type = 'number';
-    quantiteInput.min = 0;
-    quantiteInput.step = 0.1;
-    quantiteInput.required = true;
-    form.appendChild(quantiteLabel);
-    form.appendChild(quantiteInput);
-    form.appendChild(document.createElement('br'));
-
-    // Bouton soumettre
-    const submitButton = document.createElement('button');
-    submitButton.type = 'submit';
-    submitButton.textContent = 'Ajouter';
-    form.appendChild(submitButton);
-
-    // Ajouter le formulaire à la page
-    const repasDiv = document.getElementById('newRepas');
-    repasDiv.insertAdjacentElement('afterend', form);
-
-    // Soumettre le formulaire
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const date = dateSelect.value;
-        const nourritureId = nourritureSelect.value;
-        const quantite = parseFloat(quantiteInput.value);
-
-        // Créer un objet avec les valeurs à envoyer
-        const repas = {
-            date: date,
-            nourritureId: nourritureId,
-            quantite: quantite
-        };
-
-        // Convertir l'objet en chaîne de caractères JSON
-        const repasJson = JSON.stringify(repas);
-
-        // Envoyer la requête pour ajouter le repas
-        const sessionId = sessionStorage.getItem('userId');
-        const url = API_BASE_URL + '/data?type=addRepas';
-        const response = await fetch(url, {
-            method: 'POST',
-            body: repasJson,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const data = await response.json();
-
-        // Afficher le nouveau repas
-        $("#nourritureBody").prepend(`
-      <tr>
-        <td width="150px">` + date + `</td>
-          <td width="150px">` + nourritureData[nourritureId - 1].nomAliment + `</td>
-          <td width="150px">` + quantite + `</td>
-      </tr>
-      `);
     });
-
 }
+// async function ajoutRepas() {
+
+//     // récupérer la liste des aliments dans la base de données
+//     const response2 = await fetch(API_BASE_URL + '/data?type=getNourriture&id=' + id);
+//     const nourritureData2 = await response2.json();
+//     //afficher une liste déroulante des aliments
+//     const form = document.getElementById('form');
+//     form.innerHTML = '';
+
+
+
+
+//     // Champ date
+//     const dateLabel = document.createElement('label');
+//     dateLabel.textContent = 'Date : ';
+//     const dateSelect = document.createElement('select');
+//     for (let i = 0; i < 7; i++) {
+//         const date = new Date();
+//         date.setDate(date.getDate() - i);
+//         const option = document.createElement('option');
+//         option.value = date.toISOString().slice(0, 10);
+//         option.textContent = date.toLocaleDateString();
+//         dateSelect.appendChild(option);
+//     }
+//     form.appendChild(dateLabel);
+//     form.appendChild(dateSelect);
+//     form.appendChild(document.createElement('br'));
+
+//     // Champ nourriture
+//     const nourritureLabel = document.createElement('label');
+//     nourritureLabel.textContent = 'Nourriture : ';
+//     const nourritureSelect = document.createElement('select');
+//     for (let i = 0; i < nourritureData.length; i++) {
+//         const option = document.createElement('option');
+//         option.value = nourritureData[i].Id_aliment;
+//         option.textContent = nourritureData[i].nomAliment;
+//         nourritureSelect.appendChild(option);
+//     }
+//     form.appendChild(nourritureLabel);
+//     form.appendChild(nourritureSelect);
+//     form.appendChild(document.createElement('br'));
+
+//     // Champ quantité
+//     const quantiteLabel = document.createElement('label');
+//     quantiteLabel.textContent = 'Quantité : ';
+//     const quantiteInput = document.createElement('input');
+//     quantiteInput.type = 'number';
+//     quantiteInput.min = 0;
+//     quantiteInput.step = 0.1;
+//     quantiteInput.required = true;
+//     form.appendChild(quantiteLabel);
+//     form.appendChild(quantiteInput);
+//     form.appendChild(document.createElement('br'));
+
+//     // Bouton soumettre
+//     const submitButton = document.createElement('button');
+//     submitButton.type = 'submit';
+//     submitButton.textContent = 'Ajouter';
+//     form.appendChild(submitButton);
+
+//     // Ajouter le formulaire à la page
+//     const repasDiv = document.getElementById('newRepas');
+//     repasDiv.insertAdjacentElement('afterend', form);
+
+//     // Soumettre le formulaire
+//     form.addEventListener('submit', async (event) => {
+//         event.preventDefault();
+//         const date = dateSelect.value;
+//         const nourritureId = nourritureSelect.value;
+//         const quantite = parseFloat(quantiteInput.value);
+
+//         // Créer un objet avec les valeurs à envoyer
+//         const repas = {
+//             date: date,
+//             nourritureId: nourritureId,
+//             quantite: quantite
+//         };
+
+//         // Convertir l'objet en chaîne de caractères JSON
+//         const repasJson = JSON.stringify(repas);
+
+//         // Envoyer la requête pour ajouter le repas
+//         const sessionId = sessionStorage.getItem('userId');
+//         const url = API_BASE_URL + '/data?type=addRepas';
+//         const response = await fetch(url, {
+//             method: 'POST',
+//             body: repasJson,
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
+//         const data = await response.json();
+
+//         // Afficher le nouveau repas
+//         $("#nourritureBody").prepend(`
+//       <tr>
+//         <td width="150px">` + date + `</td>
+//           <td width="150px">` + nourritureData[nourritureId - 1].nomAliment + `</td>
+//           <td width="150px">` + quantite + `</td>
+//       </tr>
+//       `);
+//     });
+
+// }
 
 // //show all repas
 // async function showAllRepas() {
@@ -572,7 +576,7 @@ async function ajoutRepas() {
 //         const url = API_BASE_URL + `/data?${params.toString()}`;
 //         const response = await fetch(url);
 //         const nourritureData = await response.json();
-        
+
 //         let nomAliment = nourritureData[0].nomAliment;
 
 //         const Params = new URLSearchParams();
@@ -585,7 +589,7 @@ async function ajoutRepas() {
 //         // console.log(NourritureData);
 //         let energieAliment = NourritureData[0].Energie;
 //         let energie = energieAliment * quantite / 100;
-        
+
 //         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
 
 //         //merge avec l'energie
@@ -639,7 +643,7 @@ async function showAllRepas() {
         const url = API_BASE_URL + `/data?${params.toString()}`;
         const response = await fetch(url);
         const nourritureData = await response.json();
-        
+
         let nomAliment = nourritureData[0].nomAliment;
 
         const Params = new URLSearchParams();
@@ -651,14 +655,20 @@ async function showAllRepas() {
         const NourritureData = await Response.json();
         // console.log(NourritureData);
         let energieAliment = NourritureData[0].Energie;
+<<<<<<< HEAD
         let energie = parseFloat(energieAliment * quantite / 100);
         
+=======
+        let energie = energieAliment * quantite / 100;
+
+>>>>>>> 27b6101cf3d09ce11c1454ff017a7ac5868ad003
         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
 
         //merge avec l'energie
         data[i].Energie = energie;
     }
 
+<<<<<<< HEAD
     //regrouper les energies consommees par jour
     const repasByDate = data.reduce((acc, obj) => {
         const date = obj.Date_conso;
@@ -683,6 +693,10 @@ async function showAllRepas() {
 
     const lastSevenData = dateEnergie.slice(0,7).reverse();
     const chartData = lastSevenData.length >= 7 ? lastSevenData : dateEnergie.slice().reverse();
+=======
+    const lastSevenData = data.slice(0, 7).reverse();
+    const chartData = lastSevenData.length >= 7 ? lastSevenData : data.slice().reverse();
+>>>>>>> 27b6101cf3d09ce11c1454ff017a7ac5868ad003
 
     const ctx = document.getElementById('myCalorie').getContext('2d');
     const chart = new Chart(ctx, {
