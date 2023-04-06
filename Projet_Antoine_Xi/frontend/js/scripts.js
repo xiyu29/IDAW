@@ -357,12 +357,12 @@ function modificationMdp() {
 }
 
 //affichage de pourcentage de chaque nutriment dans un nourriture
-function showPourcentage(idAliment){
+function showPourcentage(idAliment) {
     // window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/nutrimentPourcentage.php";
     $.ajax({
         url: API_BASE_URL + '/data?type=getNutriment&id=' + idAliment,
         method: "GET",
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             const Eau = data[0].Eau;
             const Protéines = data[0].Protéines;
@@ -377,14 +377,14 @@ function showPourcentage(idAliment){
             const Saccharose = data[0].Saccharose;
             const Amidon = data[0].EAmidon;
             const FibresAlimentaires = data[0].FibresAlimentaires;
-            const autres = 100 - Eau - Protéines - Glucides - Lipides - Sucres - Fructose - Galactose - Glucose - Lactose - Maltose - Saccharose - Amidon - FibresAlimentaires;  
+            const autres = 100 - Eau - Protéines - Glucides - Lipides - Sucres - Fructose - Galactose - Glucose - Lactose - Maltose - Saccharose - Amidon - FibresAlimentaires;
 
             //show graphe 
             const chartData = {
                 labels: ['Eau', 'Protéines', 'Glucides', 'Lipides', 'Sucres', 'Fructose', 'Galactose', 'Glucose', 'Lactose', 'Maltose', 'Saccharose', 'Amidon', 'Fibres alimentaires', 'autres'],
                 datasets: [{
                     label: 'Nutriments',
-                    data: [Eau,Protéines,Glucides,Lipides,Sucres,Fructose,Galactose,Glucose,Lactose,Maltose,Saccharose,Amidon,FibresAlimentaires,autres],
+                    data: [Eau, Protéines, Glucides, Lipides, Sucres, Fructose, Galactose, Glucose, Lactose, Maltose, Saccharose, Amidon, FibresAlimentaires, autres],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.3)',
                         'rgba(54, 162, 235, 0.3)',
@@ -439,10 +439,10 @@ function showPourcentage(idAliment){
                 },
             });
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
-    });  
+    });
 }
 async function ajoutRepas() {
     // Récupérer la liste des aliments
@@ -572,7 +572,7 @@ async function ajoutRepas() {
 //         const url = API_BASE_URL + `/data?${params.toString()}`;
 //         const response = await fetch(url);
 //         const nourritureData = await response.json();
-        
+
 //         let nomAliment = nourritureData[0].nomAliment;
 
 //         const Params = new URLSearchParams();
@@ -585,7 +585,7 @@ async function ajoutRepas() {
 //         // console.log(NourritureData);
 //         let energieAliment = NourritureData[0].Energie;
 //         let energie = energieAliment * quantite / 100;
-        
+
 //         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
 
 //         //merge avec l'energie
@@ -635,7 +635,7 @@ async function showAllRepas() {
         const url = API_BASE_URL + `/data?${params.toString()}`;
         const response = await fetch(url);
         const nourritureData = await response.json();
-        
+
         let nomAliment = nourritureData[0].nomAliment;
 
         const Params = new URLSearchParams();
@@ -648,14 +648,14 @@ async function showAllRepas() {
         // console.log(NourritureData);
         let energieAliment = NourritureData[0].Energie;
         let energie = energieAliment * quantite / 100;
-        
+
         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
 
         //merge avec l'energie
         data[i].Energie = energie;
     }
 
-    const lastSevenData = data.slice(0,7).reverse();
+    const lastSevenData = data.slice(0, 7).reverse();
     const chartData = lastSevenData.length >= 7 ? lastSevenData : data.slice().reverse();
 
     const ctx = document.getElementById('myCalorie').getContext('2d');

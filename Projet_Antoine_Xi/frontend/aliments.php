@@ -1,3 +1,7 @@
+<?php
+    require_once('template_menu.php');
+?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -6,9 +10,16 @@
     <link rel="stylesheet" type="text/css" href="./aliments_front/style.css">
     <script src="./aliments_front/config.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <title>tabletest</title>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!--  -->
+    <!-- bibliotheque DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
