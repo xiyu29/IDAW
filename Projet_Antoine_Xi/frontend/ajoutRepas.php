@@ -71,7 +71,7 @@ require_once('template_head.php');
             success: function (data) {
                 var options = '';
                 $.each(data, function (index, value) {
-                    options += '<option value="' + value.idAliment + '">' + value.nomAliment + '</option>';
+                    options += '<option value="' + value.idAliment + '">' + value.nomAliment + '</option>';                    
                 });
                 $('#repas').append(options);
             },
@@ -82,19 +82,24 @@ require_once('template_head.php');
     }
     //fonction qui ajoute un repas à la base de données
     function ajoutRepas() {
+        const id = sessionStorage.getItem('userId');
+        //print id
+        console.log(id);
         var date = $('#date').val();
-        var repas = $('#repas').val();
+        var repas = $('#repas').val();        
         var quantité = $('#quantité').val();
         $.ajax({
             url: "../backend/api.php/newRepas",
-            type: "POST",   
+            method : "POST",
+            data: JSON.stringify({
+                type: 'newRepas',
+                //id de l'utilisateur connecté
+                "Id_personne": id,
+                "Id_aliment": repas,
+                "Date_conso": date,
+                "Quantite": quantité
+            }),
             dataType: "json",
-            data: {
-                "date": date,
-                //selectionne l'id de l'aliment dans la liste déroulante
-                "repas": repas,
-                "quantité": quantité
-            },
             success: function (data) {
                 console.log(data);
                 alert("Repas ajouté");
