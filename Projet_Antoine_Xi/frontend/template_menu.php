@@ -8,7 +8,7 @@
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/Projet_Antoine_Xi/frontend/homePage.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/Projet_Antoine_Xi/frontend/profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/Projet_Antoine_Xi/frontend/aliments.php">Aliments</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/frontend/aliments.php">Aliments</a></li>
                     </ul>
                 </div>
             </div>

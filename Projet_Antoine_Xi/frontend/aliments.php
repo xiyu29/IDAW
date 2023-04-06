@@ -61,13 +61,13 @@
                     { "data": "nomAliment" },
                     { "data": "type" },
                     {
-                        "data": "id",
+                        "data": "idAliment",
                         "render": function (data) {
                             return "<button class='btn btn-danger' onclick='deleteAliment(" + data + ")'>Supprimer</button>";
                         }
                     },
                     {
-                        "data": "id",
+                        "data": "idAliment",
                         "render": function (data) {
                             return "<button class='btn btn-warning' onclick='modifyAliment(" + data + ")'>Modifier</button>";
                         }

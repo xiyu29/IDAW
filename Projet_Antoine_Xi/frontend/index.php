@@ -13,7 +13,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <!-- <h1>Connexion</h1> -->
-                            <h2 class="post-meta">Bienvenu à IMangerMieux</h2>
+                            <h2 class="post-meta">Bienvenue à IMangerMieux</h2>
                         </div>
                     </div>
                 </div>
