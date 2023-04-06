@@ -1,5 +1,5 @@
-const API_BASE_URL = "http://localhost/Projet_Antoine_Xi/backend/api.php";
-const path = "http://localhost/Projet_Antoine_Xi/";
+const API_BASE_URL = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/backend/api.php";
+const path = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/";
 
 
 //index.php -> button 'se connecter'
