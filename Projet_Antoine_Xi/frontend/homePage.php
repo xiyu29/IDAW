@@ -35,6 +35,10 @@
                 <tbody  align="center" id="nourritureBody"></tbody>
             </table>
             <hr class="my-4" />
+
+            <h3>Energie de mes derniers repas</h3>
+            <canvas id="myCalorie"></canvas>
+            <hr class="my-4" />
             <!-- Pager-->
             <!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="journal.php">Plus repas →</a></div> -->
             <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/ajoutRepas.php">Ajouter un repas →</a></div>

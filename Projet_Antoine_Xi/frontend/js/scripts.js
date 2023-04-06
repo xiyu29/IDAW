@@ -545,7 +545,69 @@ async function ajoutRepas() {
 
 }
 
-//show all repas
+// //show all repas
+// async function showAllRepas() {
+//     const sessionId = sessionStorage.getItem('userId');
+//     const params = new URLSearchParams();
+
+//     params.append('id', sessionId);
+//     params.append('type', 'getMeal');
+
+//     const url = API_BASE_URL + `/data?${params.toString()}`;
+//     const response = await fetch(url);
+//     const data = await response.json();
+
+//     console.log(data);
+
+//     const table = $('#tableRepas').DataTable();
+
+//     for (let i = 0; i < data.length; i++) {
+//         let date_conso = data[i].Date_conso;
+//         let quantite = data[i].Quantite;
+
+//         const params = new URLSearchParams();
+//         params.append('id_aliment', data[i].Id_aliment);
+//         params.append('type', 'getNourriture');
+
+//         const url = API_BASE_URL + `/data?${params.toString()}`;
+//         const response = await fetch(url);
+//         const nourritureData = await response.json();
+        
+//         let nomAliment = nourritureData[0].nomAliment;
+
+//         const Params = new URLSearchParams();
+//         Params.append('id_aliment', data[i].Id_aliment);
+//         Params.append('type', 'getEnergie');
+
+//         const Url = API_BASE_URL + `/data?${Params.toString()}`;
+//         const Response = await fetch(Url);
+//         const NourritureData = await Response.json();
+//         // console.log(NourritureData);
+//         let energieAliment = NourritureData[0].Energie;
+//         let energie = energieAliment * quantite / 100;
+        
+//         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
+
+//         //merge avec l'energie
+//         data[i].Energie = energie;
+
+//         const ctx = document.getElementById('myCalorie').getContext('2d');
+//         const chart = new Chart(ctx, {
+//             type: 'line',
+//             data: {
+//             labels: data.map(item => item.Date_conso),
+//             datasets: [{
+//                 label: '数量',
+//                 data: data.map(item => item.Energie),
+//                 borderColor: 'rgb(255, 99, 132)',
+//             }]
+//             },
+//         });
+
+//         chart.update();
+//     }
+// }
+
 async function showAllRepas() {
     const sessionId = sessionStorage.getItem('userId');
     const params = new URLSearchParams();
@@ -561,11 +623,11 @@ async function showAllRepas() {
 
     const table = $('#tableRepas').DataTable();
 
+    // 添加所有数据到表格中
     for (let i = 0; i < data.length; i++) {
         let date_conso = data[i].Date_conso;
         let quantite = data[i].Quantite;
 
-        //fonction 1
         const params = new URLSearchParams();
         params.append('id_aliment', data[i].Id_aliment);
         params.append('type', 'getNourriture');
@@ -573,9 +635,9 @@ async function showAllRepas() {
         const url = API_BASE_URL + `/data?${params.toString()}`;
         const response = await fetch(url);
         const nourritureData = await response.json();
+        
         let nomAliment = nourritureData[0].nomAliment;
 
-        //fonction 2
         const Params = new URLSearchParams();
         Params.append('id_aliment', data[i].Id_aliment);
         Params.append('type', 'getEnergie');
@@ -583,9 +645,31 @@ async function showAllRepas() {
         const Url = API_BASE_URL + `/data?${Params.toString()}`;
         const Response = await fetch(Url);
         const NourritureData = await Response.json();
+        // console.log(NourritureData);
         let energieAliment = NourritureData[0].Energie;
         let energie = energieAliment * quantite / 100;
         
         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
+
+        //merge avec l'energie
+        data[i].Energie = energie;
     }
+
+    const lastSevenData = data.slice(0,7).reverse();
+    const chartData = lastSevenData.length >= 7 ? lastSevenData : data.slice().reverse();
+
+    const ctx = document.getElementById('myCalorie').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartData.map(item => item.Date_conso),
+            datasets: [{
+                label: 'Energie/kj',
+                data: chartData.map(item => item.Energie),
+                borderColor: 'rgb(255, 99, 132)',
+            }]
+        },
+    });
+
+    chart.update();
 }

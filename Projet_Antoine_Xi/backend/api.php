@@ -32,7 +32,7 @@
 
                 case 'getMeal':
                     $id = $_GET['id'];
-                    $request = $pdo->prepare("SELECT * FROM consommer ORDER BY Date_conso DESC");
+                    $request = $pdo->prepare("SELECT * FROM consommer WHERE Id_personne='$id' ORDER BY Date_conso DESC");
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
