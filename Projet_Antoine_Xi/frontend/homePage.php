@@ -36,7 +36,7 @@
             </table>
             <hr class="my-4" />
 
-            <h3>Energie de mes derniers repas</h3>
+            <h3>Energie consommée pendant 7 derniers jours</h3>
             <canvas id="myCalorie"></canvas>
             <hr class="my-4" />
             <!-- Pager-->

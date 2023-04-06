@@ -69,8 +69,14 @@
                     $request = $pdo->prepare("SELECT Energie FROM nutriment WHERE Id_aliment='$id'");
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
-                    // echo $resultat;
                     break;
+
+                // case 'getNutrimentGroupByDate':
+                //     $id = $_GET['id_aliment'];
+                //     $request = $pdo->prepare("SELECT * FROM nutriment WHERE Id_aliment='$id' GROUP BY Date_conso");
+                //     $request->execute();
+                //     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                //     break;
 
             }
             break;

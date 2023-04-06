@@ -621,6 +621,10 @@ async function showAllRepas() {
 
     console.log(data);
 
+            
+                    
+                    
+
     const table = $('#tableRepas').DataTable();
 
     // 添加所有数据到表格中
@@ -647,7 +651,7 @@ async function showAllRepas() {
         const NourritureData = await Response.json();
         // console.log(NourritureData);
         let energieAliment = NourritureData[0].Energie;
-        let energie = energieAliment * quantite / 100;
+        let energie = parseFloat(energieAliment * quantite / 100);
         
         table.row.add([date_conso, nomAliment, quantite, energie]).draw();
 
@@ -655,8 +659,30 @@ async function showAllRepas() {
         data[i].Energie = energie;
     }
 
-    const lastSevenData = data.slice(0,7).reverse();
-    const chartData = lastSevenData.length >= 7 ? lastSevenData : data.slice().reverse();
+    //regrouper les energies consommees par jour
+    const repasByDate = data.reduce((acc, obj) => {
+        const date = obj.Date_conso;
+        if (!acc[date]) {
+            acc[date] = [];
+        }
+        acc[date].push(obj);
+        return acc;
+        }, {});
+        
+        //calcul de la somme d'energie consommee par jour
+        const dateEnergie = Object.keys(repasByDate).map(date => {
+        const repas = repasByDate[date];
+        const totalEnergie = repas.reduce((sum, obj) => sum + parseFloat(obj.Energie), 0.0);
+        return { Date_conso: date, Energie: totalEnergie };
+        });
+        
+        //new arry qui contient que la date_conso et l'energie consommee en total
+        console.log(dateEnergie);
+
+    console.log(data);
+
+    const lastSevenData = dateEnergie.slice(0,7).reverse();
+    const chartData = lastSevenData.length >= 7 ? lastSevenData : dateEnergie.slice().reverse();
 
     const ctx = document.getElementById('myCalorie').getContext('2d');
     const chart = new Chart(ctx, {
@@ -673,3 +699,4 @@ async function showAllRepas() {
 
     chart.update();
 }
+
