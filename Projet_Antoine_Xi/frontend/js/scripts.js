@@ -1,5 +1,5 @@
-const API_BASE_URL = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/backend/api.php";
-const path = "http://localhost/Xi_Antoine/IDAW/Projet_Antoine_Xi/";
+const API_BASE_URL = "http://localhost/Projet_Antoine_Xi/backend/api.php";
+const path = "http://localhost/Projet_Antoine_Xi/";
 
 
 //index.php -> button 'se connecter'
@@ -13,6 +13,8 @@ function connexion() {
     params.append('login', login);
     params.append('mdp', mdp);
     params.append('type', 'connexion');
+
+    console.log(API_BASE_URL);
 
     const url = API_BASE_URL + `/data?${params.toString()}`;
 
@@ -58,7 +60,9 @@ function getSession() {
                 let userSessionDiv = document.getElementById("userSession");
                 let p = document.createElement("p");
                 p.textContent = "Hello, " + prenom;//inversement du nom/prénom pour les utilisateurs entrés manuellements sinon tout ok
-                userSessionDiv.appendChild(p);
+                if(p != null){
+                    userSessionDiv.appendChild(p);
+                }  
             }
             success(data);
         })
@@ -358,7 +362,7 @@ function modificationMdp() {
 
 //affichage de pourcentage de chaque nutriment dans un nourriture
 function showPourcentage(idAliment){
-    // window.location.href = "http://localhost/Projet_Antoine_Xi/frontend/nutrimentPourcentage.php";
+
     $.ajax({
         url: API_BASE_URL + '/data?type=getNutriment&id=' + idAliment,
         method: "GET",
@@ -442,8 +446,10 @@ function showPourcentage(idAliment){
         error: function(error) {
             console.log(error);
         }
-    });  
+    }); 
+    
 }
+
 async function ajoutRepas() {
     // Récupérer la liste des aliments
     const response = await fetch(API_BASE_URL + '/data?type=getNourriture');
@@ -691,5 +697,172 @@ async function showAllRepas() {
     });
 
     chart.update();
+}
+
+//partie page showAliments
+function getAllAliments(){
+    $.ajax({
+        url: API_BASE_URL + '/data?type=getAllFood',
+        method: "GET",
+        success: function (data) {
+            console.log(data);
+            const table = $('#tableAliments').DataTable();
+            table.clear();
+            table.rows.add(data);
+            table.draw();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+    const table = $('#tableAliments').DataTable({
+        "columns": [
+            { "data": "id", "width": "50px" },
+            { "data": "nomAliment", "width": "400px" },
+            { "data": "type", "width": "150px" },
+            { "width": "50px" },
+            { "width": "50px" },
+            { "width": "50px" }
+        ],
+        "columnDefs": [
+            { "orderable": false, "targets": [3, 4, 5] },
+            { "orderable": false, "targets": 0 }
+        ],
+        "pageLength": 5,
+        "lengthChange": false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/French.json"
+        },
+        "columns": [
+            { "data": "idAliment" },
+            { "data": "nomAliment" },
+            { "data": "type" },
+            {
+                "render": function (data, type, row, meta) {
+                    return '<button type="button" class="btn" onclick="remplirAliment(' + row.idAliment + ')">Modifier</button>';
+                }
+            },
+            {
+                "render": function (data, type, row, meta) {
+                    return '<button type="button" class="btn" onclick="deleteAliment(' + row.idAliment + ')">Supprimer</button>';
+                }
+            },
+            {
+                "render": function (data, type, row, meta) {
+                    return '<button type="button" class="btn" onclick="goPourcentagePage(' + row.idAliment + ')">Détailles</button>';
+                }
+            }
+        ]
+    });
+}
+
+//partie ajout aliment
+function goPourcentagePage(id) {
+    window.location.href = path + "frontend/nutrimentPourcentage.php?id=" + id;
+}
+
+function getAllType(){
+    $.ajax({
+        url: API_BASE_URL + '/data?type=getAllType' ,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            var options = '';
+            $.each(data, function (index, value) {
+                options += '<option value="' + value.Nom_type + '">' + value.Nom_type + '</option>';                    
+            });
+            $('#type').append(options);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function addAliment() {
+    // prevent the form to be sent to the server
+    event.preventDefault();
+    let nomAliment = $("#nom").val();
+    let type = $("#type").val();
+    //connvertir le tableau en JSON
+    $.ajax({
+        url: API_BASE_URL,
+        method: "POST",
+        data: JSON.stringify({
+            type: 'newAliment',
+            nomAliment: nomAliment,
+            typeAliment: type,
+        }),
+        dataType: "json",
+        success: function () {
+            window.location.href = path + "frontend/showAliment.php";
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function deleteAliment(id){
+    event.preventDefault();
+    $.ajax({
+        url: API_BASE_URL,
+        method: "DELETE",
+        data: JSON.stringify({
+            type: 'deleteAliment',
+            id: id,
+        }),
+        dataType: "json",
+        success: function () {
+            alert("Aliment supprimé!")
+            window.location.href = path + "frontend/showAliment.php";
+        },
+        error: function (error) {
+            alert("Cet aliment est déjà consommé, vous ne pouvez pas le supprimer pour l'instant!");
+            window.location.href = path + "frontend/showAliment.php";    
+        }
+    });
+}
+
+function remplirAliment(id){
+    event.preventDefault();
+    $.ajax({
+        url: API_BASE_URL + '/data?type=getAlimentInfo&id_aliment=' + id,
+        method: "GET",
+        success: function (data) {
+            document.getElementById("nom").value=data[0].nomAliment;
+        },
+        error: function (error) {
+            console.log(error);  
+        }
+    });
+    var buttonArea = document.getElementById("buttonArea");
+    buttonArea.innerHTML = "<button onclick='modifierAliment(" + id + ")' class='btn btn-primary' id='newButton'>Modifier</button>";
+}
+
+function modifierAliment(id){
+    event.preventDefault();
+    let nouveauNom = $("#nom").val();
+    let nouveauType = $("#type").val();
+    $.ajax({
+        url: API_BASE_URL,
+        method: "PUT",
+        data: JSON.stringify({
+            type: 'updateAliment',
+            id: id,
+            nouveauNom: nouveauNom,
+            nouveauType: nouveauType,
+        }),
+        dataType: "json",
+        success: function () {
+            alert("Aliment modifié!")
+            window.location.href = path + "frontend/showAliment.php";
+        },
+        error: function (error) {
+            alert("Cet aliment est déjà consommé, vous ne pouvez pas le modifier pour l'instant!");
+            window.location.href = path + "frontend/showAliment.php";    
+        }
+    });
 }
 

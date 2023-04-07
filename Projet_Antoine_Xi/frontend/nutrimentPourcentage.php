@@ -1,8 +1,15 @@
 <?php
-
     require_once('template_head.php');
     require_once('template_menu.php');
 ?>
+<?php
+  $id = $_GET['id'];
+  // 根据 $id 获取数据，并生成饼图
+?>
+
+<script>
+   showPourcentage('<?php echo $id; ?>');
+</script>
 
 <!-- Header -->
 <header class="masthead" style="background-image: url('assets/img/legumes2.jpg')">
@@ -25,7 +32,7 @@
             <canvas id="myChart"></canvas>
             <hr class="my-4" />
             <!-- Pager-->
-            <!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="post.html">Plus repas →</a></div> -->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href= "http://localhost/Projet_Antoine_Xi/frontend/showAliment.php">←Return</a></div>
         </div>
     </div>
 </div>
@@ -36,7 +43,5 @@
 
 ?>
 
-<script>
-    showPourcentage(500);
-</script>
+
 

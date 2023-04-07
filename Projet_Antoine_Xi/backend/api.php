@@ -38,7 +38,6 @@
                     break;
 
                 case 'getNourriture':
-
                     $id_aliment = $_GET['id_aliment'];
                     $request = $pdo->prepare("SELECT nomAliment FROM aliment WHERE idAliment='$id_aliment'");
                     $request->execute();
@@ -78,6 +77,26 @@
                 //     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                 //     break;
 
+                case 'getAllFood':
+                    $request = $pdo->prepare("SELECT * FROM aliment ORDER BY idAliment ASC");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'getAllType':
+                    $request = $pdo->prepare("SELECT * FROM type_nourriture");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'getAlimentInfo':
+                    $id_aliment = $_GET['id_aliment'];
+                    $request = $pdo->prepare("SELECT * FROM aliment WHERE idAliment='$id_aliment'");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+    
+
             }
             break;
 
@@ -96,7 +115,8 @@
                     $request = $pdo->prepare("INSERT INTO personne (Nom_personne, Prenom_personne, Login, Mdp, Email_personne) VALUES ('$nom', '$prenom', '$login', '$mdp', '$email')");         
                     $request->execute();         
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
-                    break;  
+                    break; 
+
                 case 'newRepas' :
                     $json = json_decode(file_get_contents('php://input'), true);         
                     $id = $json['Id_personne'];         
@@ -104,6 +124,15 @@
                     $date = $json['Date_conso'];                
                     $quantite = $json['Quantite'];         
                     $request = $pdo->prepare("INSERT INTO consommer (Id_personne, Id_aliment, Date_conso, Quantite) VALUES ('$id', '$aliment', '$date' , '$quantite')");         
+                    $request->execute();         
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'newAliment':
+                    $json = json_decode(file_get_contents('php://input'), true);         
+                    $nomAliment = $json['nomAliment'];         
+                    $typeAliment = $json['typeAliment']; 
+                    $request = $pdo->prepare("INSERT INTO aliment (nomAliment, type) VALUES ('$nomAliment', '$typeAliment')");         
                     $request->execute();         
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
@@ -155,16 +184,36 @@
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
-            }
+
+                case 'updateAliment':
+                    $id = $json['id']; 
+                    $nouveauNom = $json['nouveauNom'];
+                    $nouveauType = $json['nouveauType'];
+
+                    $request = $pdo->prepare("
+                        UPDATE aliment 
+                        SET nomAliment='$nouveauNom', type='$nouveauType'
+                        WHERE idAliment='$id'
+                    ");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+        }
             break;
 
 
         case 'DELETE':
-            // $json = json_decode(file_get_contents('php://input'), true);         
-            // $id = $json['id'];  
-            // $request = $pdo->prepare("DELETE FROM Users WHERE id=$id");
-            // $request->execute();
-            // $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+            $json = json_decode(file_get_contents('php://input'), true);
+            $type = $json['type'];
+            
+            switch($type){
+                case 'deleteAliment':
+                $id = $json['id'];
+                $request = $pdo->prepare("DELETE FROM aliment WHERE idAliment='$id'");
+                $request->execute();
+                $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                break;
+            }
             break;
     }
 

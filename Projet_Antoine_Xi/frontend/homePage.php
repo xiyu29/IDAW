@@ -18,11 +18,7 @@
 </header>
 
 <!-- Body -->
-<div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- Post preview-->
-            <h3>Mes repas</h3>
+<h3>Mes repas</h3>
             <table id="tableRepas" data-pagecount="3">
                 <thead align="center">
                     <tr class="table-head">
@@ -34,6 +30,11 @@
                 </thead>
                 <tbody  align="center" id="nourritureBody"></tbody>
             </table>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            
             <hr class="my-4" />
 
             <h3>Energie consommée pendant 7 derniers jours</h3>
@@ -58,6 +59,7 @@
 
     $(document).ready(function() {
         $('#tableRepas').DataTable({
+            "width": "400px",
             "pageLength": 5,
             "lengthChange": false,
             "order": [[0, "desc"]],
