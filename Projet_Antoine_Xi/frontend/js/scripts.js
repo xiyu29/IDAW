@@ -933,3 +933,10 @@ function checkConnexion() {
         window.location.href = path + "frontend";
     }
 }
+
+//function efface la session quand on se deconnecte
+function deconnexion(){
+    alert("Vous êtes déconnecté.e!");
+    window.location.href = path + "frontend";
+    sessionStorage.removeItem('userId');
+}
