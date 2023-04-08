@@ -335,8 +335,12 @@ function modificationMdp() {
     var confirmationNouveauMdp = document.getElementById("confirmationNouveauMdp").value;
 
     const id = sessionStorage.getItem('userId');
+    alert(nouveauMdp);
 
-    if (nouveauMdp == confirmationNouveauMdp) {
+    if(nouveauMdp == "") {
+        alert("Veuillez entrer le nouveau mot de passe!");
+    }
+    else if (nouveauMdp == confirmationNouveauMdp) {
         $.ajax({
             url: API_BASE_URL,
             method: "PUT",

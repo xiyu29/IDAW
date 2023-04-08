@@ -52,9 +52,14 @@ require_once('template_head.php');
                         </tr>
                     </table>
                 </form>
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase"
-                        href="./homePage.php">←Revenir</a></div>
-                <button onclick="ajoutRepas()" class="btn btn-primary" id="submit">Ajouter</button>
+                <div class="d-flex justify-content-end mb-4">
+                    <a class="btn btn-primary text-uppercase" href="./homePage.php">Revenir</a>
+                    <div style="width: 25px;"></div>
+                    <button onclick="ajoutRepas()" class="btn btn-primary text-uppercase" id="submit">Ajouter</button>
+                </div>
+                <div class="d-flex justify-content-end mb-4">
+                
+                </div> 
             </span>
         </div>
     </div>
