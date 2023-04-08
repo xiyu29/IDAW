@@ -22,7 +22,7 @@ require_once('template_head.php');
         <div class="col-md-10 col-lg-8 col-xl-7">
             <span class="subheading">
                 <form>
-                    <table align="center">
+                    <table align="center" class="table">
                         <tr>
                             <td>
                                 <label>Date</label>
@@ -38,8 +38,7 @@ require_once('template_head.php');
                             </td>
                             <td>
                                 <!-- liste déroulante de tous les aliments dans la base de données-->
-                                <select name="repas" id="repas">
-
+                                <select name="repas" id="repas" class="selectStyle">
                             </td>
                         </tr>
                         <tr>
@@ -55,67 +54,18 @@ require_once('template_head.php');
                 <div class="d-flex justify-content-end mb-4">
                     <a class="btn btn-primary text-uppercase" href="./homePage.php">Revenir</a>
                     <div style="width: 25px;"></div>
-                    <button onclick="ajoutRepas()" class="btn btn-primary text-uppercase" id="submit">Ajouter</button>
+                    <button onclick="ajoutNewRepas()" class="btn btn-primary text-uppercase" id="submit">Ajouter</button>
                 </div>
-                <div class="d-flex justify-content-end mb-4">
-                
-                </div> 
             </span>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () { getAllAliments(); });
-    //fonction qui récupère tous les aliments de la base de données
-    function getAllAliments() {
-        $.ajax({
-            url: "../backend/aliments_back/api.php/",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                var options = '';
-                $.each(data, function (index, value) {
-                    options += '<option value="' + value.idAliment + '">' + value.nomAliment + '</option>';                    
-                });
-                $('#repas').append(options);
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    }
-    //fonction qui ajoute un repas à la base de données
-    function ajoutRepas() {
-        const id = sessionStorage.getItem('userId');
-        //print id
-        console.log(id);
-        var date = $('#date').val();
-        var repas = $('#repas').val();        
-        var quantité = $('#quantité').val();
-        $.ajax({
-            url: "../backend/api.php/newRepas",
-            method : "POST",
-            data: JSON.stringify({
-                type: 'newRepas',
-                //id de l'utilisateur connecté
-                "Id_personne": id,
-                "Id_aliment": repas,
-                "Date_conso": date,
-                "Quantite": quantité
-            }),
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                alert("Repas ajouté");
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    }
-
+    $(document).ready(function () { 
+        getAllAliments(); 
+    });
 </script>
 <?php
-require_once('template_foot.php');
+    require_once('template_foot.php');
 ?>

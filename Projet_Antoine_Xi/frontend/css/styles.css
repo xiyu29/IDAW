@@ -10813,3 +10813,55 @@ header.masthead .post-heading .meta a {
   opacity: 0.7;
   border-radius: 10px;
 }
+
+.table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: none;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 120px;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 237px;
+}
+
+#date {
+  width: 237px;
+}
+
+.tableIndex {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center;
+  border: none;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 50px;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 100px;
+}
+
+
+
+
+

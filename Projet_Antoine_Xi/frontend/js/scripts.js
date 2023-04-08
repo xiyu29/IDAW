@@ -335,7 +335,6 @@ function modificationMdp() {
     var confirmationNouveauMdp = document.getElementById("confirmationNouveauMdp").value;
 
     const id = sessionStorage.getItem('userId');
-    alert(nouveauMdp);
 
     if(nouveauMdp == "") {
         alert("Veuillez entrer le nouveau mot de passe!");
@@ -870,3 +869,67 @@ function modifierAliment(id){
     });
 }
 
+//fonction qui ajoute un repas à la base de données
+function ajoutNewRepas() {
+    const id = sessionStorage.getItem('userId');
+    //print id
+    console.log(id);
+    var date = $('#date').val();
+    var repas = $('#repas').val();        
+    var quantité = $('#quantité').val();
+    // console.log(data + repas + quantité);
+    if(date !== "" && repas !== "" && quantité !== ""){
+        $.ajax({
+            url: "../backend/api.php/newRepas",
+            method : "POST",
+            data: JSON.stringify({
+                type: 'newRepas',
+                //id de l'utilisateur connecté
+                "Id_personne": id,
+                "Id_aliment": repas,
+                "Date_conso": date,
+                "Quantite": quantité
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                alert("Repas ajouté");
+                window.location.href = path + "frontend/homePage.php"; 
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    else{
+        alert("Veuillez remplir tous les champs demandés!");
+    } 
+}
+
+//fonction qui récupère tous les aliments de la base de données
+function getAllAliments() {
+    $.ajax({
+        url: "../backend/aliments_back/api.php/",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            var options = '';
+            $.each(data, function (index, value) {
+                options += '<option value="' + value.idAliment + '">' + value.nomAliment + '</option>';                    
+            });
+            $('#repas').append(options);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+//function to check if there is a user connected
+function checkConnexion() {
+    const sessionId = sessionStorage.getItem('userId');
+    if(sessionId == null && window.location.href !== path + "frontend/"){
+        alert("Veuillez vous connecter d'abord, merci!");
+        window.location.href = path + "frontend";
+    }
+}

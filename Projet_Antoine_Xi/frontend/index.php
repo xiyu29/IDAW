@@ -26,7 +26,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <span class="subheading">
                         <form>
-                            <table align="center">
+                            <table align="center" class="tableIndex">
                                 <tr>
                                     <td>
                                         <label>Login</label>

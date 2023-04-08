@@ -23,4 +23,4 @@
         <!-- bibliotheque pour affichage de pourcentage de chaque nutriment -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
-    <body>
+    <body onload="checkConnexion()">
