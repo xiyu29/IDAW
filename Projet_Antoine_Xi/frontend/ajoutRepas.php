@@ -63,7 +63,7 @@ require_once('template_head.php');
 
 <script>
     $(document).ready(function () { 
-        getAllAliments(); 
+        getAllAlimentsForAjoutrepas(); 
     });
 </script>
 <?php

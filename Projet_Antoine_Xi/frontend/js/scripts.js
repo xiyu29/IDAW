@@ -324,7 +324,7 @@ function confirmModification() {
             window.location.href = path + "frontend/profil.php";
         },
         error: function (error) {
-            console.log(error);
+            alert("Veuillez entrer tous les champs demandés correctement!");
         }
     });
 }
@@ -704,6 +704,7 @@ async function showAllRepas() {
 
 //partie page showAliments
 function getAllAliments(){
+
     $.ajax({
         url: API_BASE_URL + '/data?type=getAllFood',
         method: "GET",
@@ -722,8 +723,8 @@ function getAllAliments(){
     const table = $('#tableAliments').DataTable({
         "columns": [
             { "data": "id", "width": "50px" },
+            { "data": "type", "width": "100px" },
             { "data": "nomAliment", "width": "400px" },
-            { "data": "type", "width": "150px" },
             { "width": "50px" },
             { "width": "50px" },
             { "width": "50px" }
@@ -739,8 +740,8 @@ function getAllAliments(){
         },
         "columns": [
             { "data": "idAliment" },
-            { "data": "nomAliment" },
             { "data": "type" },
+            { "data": "nomAliment" },
             {
                 "render": function (data, type, row, meta) {
                     return '<button type="button" class="btn" onclick="remplirAliment(' + row.idAliment + ')">Modifier</button>';
@@ -789,22 +790,28 @@ function addAliment() {
     let nomAliment = $("#nom").val();
     let type = $("#type").val();
     //connvertir le tableau en JSON
-    $.ajax({
-        url: API_BASE_URL,
-        method: "POST",
-        data: JSON.stringify({
-            type: 'newAliment',
-            nomAliment: nomAliment,
-            typeAliment: type,
-        }),
-        dataType: "json",
-        success: function () {
-            window.location.href = path + "frontend/showAliment.php";
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    if(nomAliment !== ""){
+        $.ajax({
+            url: API_BASE_URL,
+            method: "POST",
+            data: JSON.stringify({
+                type: 'newAliment',
+                nomAliment: nomAliment,
+                typeAliment: type,
+            }),
+            dataType: "json",
+            success: function () {
+                window.location.href = path + "frontend/showAliment.php";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    else{
+        alert("Veuillez entrer le nom d'aliment!");
+    }
+    
 }
 
 function deleteAliment(id){
@@ -907,9 +914,9 @@ function ajoutNewRepas() {
 }
 
 //fonction qui récupère tous les aliments de la base de données
-function getAllAliments() {
+function getAllAlimentsForAjoutrepas() {
     $.ajax({
-        url: "../backend/aliments_back/api.php/",
+        url: API_BASE_URL + '/data?type=getAllFood',
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -928,7 +935,7 @@ function getAllAliments() {
 //function to check if there is a user connected
 function checkConnexion() {
     const sessionId = sessionStorage.getItem('userId');
-    if(sessionId == null && window.location.href !== path + "frontend/"){
+    if(sessionId == null && window.location.href !== path + "frontend/" && window.location.href !== path + "frontend/newCompte.php"){
         alert("Veuillez vous connecter d'abord, merci!");
         window.location.href = path + "frontend";
     }

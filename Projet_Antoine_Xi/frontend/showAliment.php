@@ -19,7 +19,7 @@
 
 <!-- Body -->
 <!-- show all aliment -->
-<table id="tableAliments">
+<table id="tableAliments" align="center">
     <thead align="center">
         <tr class="table-head">
             <td>Id</td>
@@ -43,7 +43,7 @@
                     <table>
                         <tr>
                             <td>
-                                <label>Nom</label>
+                                <label>Type</label>
                             </td>
                             <td>
                                 <input type="text" id="nom" class="inputText">
@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Type</label>
+                                <label>Nom</label>
                             </td>
                             <td>
                                 <select name="type" id="type" class="selectStyle">
