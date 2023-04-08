@@ -95,6 +95,19 @@
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
+
+                case 'getColumnName':
+                    $request = $pdo->prepare("SHOW COLUMNS FROM nutriment");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'getNourritureId':
+                    $nom = $_GET['nom'];
+                    $request = $pdo->prepare("SELECT idAliment FROM aliment WHERE nomAliment='$nom'");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
     
 
             }
@@ -133,6 +146,14 @@
                     $nomAliment = $json['nomAliment'];         
                     $typeAliment = $json['typeAliment']; 
                     $request = $pdo->prepare("INSERT INTO aliment (nomAliment, type) VALUES ('$nomAliment', '$typeAliment')");         
+                    $request->execute();         
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
+
+                case 'newAlimentNutri':
+                    $json = json_decode(file_get_contents('php://input'), true);   
+                    $id = $json['id'];       
+                    $request = $pdo->prepare("INSERT INTO nutriment (Id_aliment, Energie) VALUES ('$id', 0)");         
                     $request->execute();         
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
@@ -198,6 +219,46 @@
                     $request->execute();
                     $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                     break;
+
+                case 'updateNutriment':
+                    $id = $json['id']; 
+                    $Energie = $json['Energie'];
+                    $Eau = $json['Eau'];
+                    $Protéines = $json['Protéines'];
+                    $Glucides = $json['Glucides'];
+                    $Lipides = $json['Lipides'];
+                    $Sucres = $json['Sucres'];
+                    $Fructose = $json['Fructose'];
+                    $Galactose = $json['Galactose'];
+                    $Glucose = $json['Glucose'];
+                    $Lactose = $json['Lactose'];
+                    $Maltose = $json['Maltose'];
+                    $Saccharose = $json['Saccharose'];
+                    $Amidon = $json['Amidon'];
+                    $Fibres_alimentaires = $json['Fibres_alimentaires'];
+
+                    $request = $pdo->prepare("
+                        UPDATE nutriment 
+                        SET 
+                            Energie='$Energie', 
+                            Eau='$Eau',
+                            Protéines='$Protéines',
+                            Glucides='$Glucides',
+                            Lipides='$Lipides',
+                            Sucres='$Sucres',
+                            Fructose='$Fructose',
+                            Galactose='$Galactose',
+                            Glucose='$Glucose',
+                            Lactose='$Lactose',
+                            Maltose='$Maltose',
+                            Saccharose='$Saccharose',
+                            Amidon='$Amidon',
+                            `Fibres alimentaires`='$Fibres_alimentaires'
+                        WHERE Id_aliment='$id'
+                    ");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
         }
             break;
 
@@ -213,6 +274,13 @@
                 $request->execute();
                 $resultat = $request->fetchAll(PDO::FETCH_OBJ);
                 break;
+
+                case 'deleteNutri':
+                    $id = $json['id'];
+                    $request = $pdo->prepare("DELETE FROM nutriment WHERE Id_aliment='$id'");
+                    $request->execute();
+                    $resultat = $request->fetchAll(PDO::FETCH_OBJ);
+                    break;
             }
             break;
     }

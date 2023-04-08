@@ -754,7 +754,7 @@ function getAllAliments(){
             },
             {
                 "render": function (data, type, row, meta) {
-                    return '<button type="button" class="btn" onclick="goPourcentagePage(' + row.idAliment + ')">Détailles</button>';
+                    return '<button type="button" class="btn" onclick="goPourcentagePage(' + row.idAliment + ')">Détails</button>';
                 }
             }
         ]
@@ -800,8 +800,34 @@ function addAliment() {
                 typeAliment: type,
             }),
             dataType: "json",
-            success: function () {
-                window.location.href = path + "frontend/showAliment.php";
+            success: function (data) {
+                $.ajax({
+                    url: API_BASE_URL + '/data?type=getNourritureId&nom=' + nomAliment ,
+                    type: "GET",
+                    success: function (data) {
+                        let id = data[0].idAliment;
+                        $.ajax({
+                            url: API_BASE_URL,
+                            method: "POST",
+                            data: JSON.stringify({
+                                type: 'newAlimentNutri',
+                                id: id,
+                            }),
+                            dataType: "json",
+                            success: function () {
+                                alert("Réussite!");
+                                window.location.href = path + "frontend/showAliment.php";
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+                // window.location.href = path + "frontend/showAliment.php";
             },
             error: function (error) {
                 console.log(error);
@@ -811,6 +837,8 @@ function addAliment() {
     else{
         alert("Veuillez entrer le nom d'aliment!");
     }
+
+    
     
 }
 
@@ -820,17 +848,31 @@ function deleteAliment(id){
         url: API_BASE_URL,
         method: "DELETE",
         data: JSON.stringify({
-            type: 'deleteAliment',
+            type: 'deleteNutri',
             id: id,
         }),
         dataType: "json",
-        success: function () {
-            alert("Aliment supprimé!")
-            window.location.href = path + "frontend/showAliment.php";
+        success: function (data) {
+            $.ajax({
+                url: API_BASE_URL,
+                method: "DELETE",
+                data: JSON.stringify({
+                    type: 'deleteAliment',
+                    id: id,
+                }),
+                dataType: "json",
+                success: function () {
+                    alert("Aliment supprimé!")
+                    window.location.href = path + "frontend/showAliment.php";
+                },
+                error: function (error) {
+                    alert("ERROR");
+                      
+                }
+            });
         },
         error: function (error) {
-            alert("Cet aliment est déjà consommé, vous ne pouvez pas le supprimer pour l'instant!");
-            window.location.href = path + "frontend/showAliment.php";    
+            alert("ERROR"); 
         }
     });
 }
@@ -946,4 +988,112 @@ function deconnexion(){
     alert("Vous êtes déconnecté.e!");
     window.location.href = path + "frontend";
     sessionStorage.removeItem('userId');
+}
+
+//aller a la page modification nutriments
+function goNutrimentPage(id) {
+    window.location.href = path + "frontend/modificationNutriment.php?id=" + id;
+}
+
+//function pour modifier les details & nutriments d'un aliment
+function initialiserTextArea(id){
+    $.ajax({
+        url: API_BASE_URL + '/data?type=getColumnName' ,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+
+            for(var i = 1; i <data.length; i ++){
+                console.log(data[i].Field);
+                //creer une zone de text
+                var inputElement = document.createElement('input');
+                inputElement.setAttribute('type', 'text');
+                inputElement.setAttribute('id', data[i].Field);
+                inputElement.setAttribute('name', data[i].Field);
+                inputElement.setAttribute('class', 'inputText');
+                //creer les deux <td>
+                var td1 = document.createElement('td');
+                td1.appendChild(document.createTextNode(data[i].Field + ": "));
+                var td2 = document.createElement('td');
+                td2.appendChild(inputElement);
+                var tr = document.createElement('tr');
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                //add to table
+                var table = document.getElementById('modificationAliment');
+                table.appendChild(tr);
+            }
+
+            $.ajax({
+                url: API_BASE_URL + '/data?type=getNutriment&id=' + id,
+                method: "GET",
+                success: function(dataNutri) {
+                    for(var i = 1; i <data.length; i ++){
+                        var key = data[i].Field;
+                        console.log(key);
+                        document.getElementById(key).value = dataNutri[0][key];
+                    }
+                    console.log(dataNutri);
+                },
+                error: function(errorNutri){
+                    console.log(errorNutri);
+                }
+            });
+
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function modifierNutriment(id){
+    $.ajax({
+        url: API_BASE_URL + '/data?type=getColumnName' ,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            var nutriment = {};
+            for(var i = 1; i < data.length; i ++){
+                var myElement = document.getElementById(data[i].Field);
+                nutriment[data[i].Field] = myElement.value;
+            }
+            console.log(nutriment['Fibres alimentaires']);//all values of nutriment got
+
+
+            $.ajax({
+                url: API_BASE_URL,
+                method: "PUT",
+                data: JSON.stringify({
+                    type: 'updateNutriment',
+                    id: id,
+                    Energie : nutriment.Energie,
+                    Eau : nutriment.Eau,
+                    Protéines : nutriment.Protéines,
+                    Glucides : nutriment.Glucides,
+                    Lipides : nutriment.Lipides,
+                    Sucres : nutriment.Sucres,
+                    Fructose : nutriment.Fructose,
+                    Galactose : nutriment.Galactose,
+                    Glucose : nutriment.Glucose,
+                    Lactose : nutriment.Lactose,
+                    Maltose : nutriment.Maltose,
+                    Saccharose : nutriment.Saccharose,
+                    Amidon : nutriment.Amidon,
+                    Fibres_alimentaires : nutriment['Fibres alimentaires'],
+                }),
+                dataType: "json",
+                success: function () {
+                    alert("Réussite!");
+                    window.location.href = path + "frontend/showAliment.php";
+                },
+                error: function (errorNutri) {
+                    console.log(errorNutri);
+                }
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 }

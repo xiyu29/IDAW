@@ -23,8 +23,8 @@
     <thead align="center">
         <tr class="table-head">
             <td>Id</td>
-            <td>Nom d'aliment</td>
             <td>Type d'aliment</td>
+            <td>Nom d'aliment</td>
             <td></td>
             <td></td>
             <td></td>
@@ -38,12 +38,12 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7" align="center">
             <span class="subheading">
-            <h3>Ajouter un repas</h3>
+            <h3>Ajouter un aliment</h3>
                 <form>
                     <table>
                         <tr>
                             <td>
-                                <label>Type</label>
+                                <label>Nom</label>
                             </td>
                             <td>
                                 <input type="text" id="nom" class="inputText">
@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Nom</label>
+                                <label>Type</label>
                             </td>
                             <td>
                                 <select name="type" id="type" class="selectStyle">
