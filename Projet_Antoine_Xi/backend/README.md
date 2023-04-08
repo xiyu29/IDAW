@@ -1,7 +1,7 @@
-Description de l'API
+## Description de l'API
 Cette API fournit des endpoints pour effectuer les tâches suivantes :
 
-Connexion utilisateur
+## Connexion utilisateur
 Récupération du nom d'utilisateur par son ID
 Récupération des repas consommés par l'utilisateur
 Récupération d'une nourriture par son ID
@@ -11,7 +11,7 @@ Récupération des nutriments d'un aliment par son ID
 Récupération de l'énergie d'un aliment par son ID
 Création d'un nouvel utilisateur
 Ajout d'un nouveau repas
-Endpoints
+## Endpoints
 GET /api.php?type=connexion&login=xxx&mdp=xxx : Connexion de l'utilisateur avec son nom d'utilisateur et son mot de passe.
 
 GET /api.php?type=getName&id=xxx : Récupération du nom d'utilisateur par son ID.
@@ -37,3 +37,5 @@ Pour ajouter un nouveau repas : utilisez un objet JSON avec les propriétés typ
 PUT /api.php : Modification des informations de l'utilisateur :
 
 Utilisez un objet JSON avec les propriétés type, id, newNom, newPrenom, newSport, newAge, newSexe, newTaille, newPoids et newEmail. La propriété type doit être updateProfil.
+
+À noter, dans la page aliments, la modification et la suppression d'aliments importés dans la base de données sont impossibles pour raison de contraintes de clés étrangères.
