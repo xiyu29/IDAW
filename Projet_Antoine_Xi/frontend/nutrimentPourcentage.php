@@ -32,11 +32,14 @@
             <canvas id="myChart"></canvas>
             <hr class="my-4" />
             <!-- Pager-->
+
             <div class="d-flex justify-content-end mb-4">
                 <a class="btn btn-primary text-uppercase" onclick="goNutrimentPage(<?php echo $id; ?>)">Modifier</a> 
                 <div style="margin-left: 25px;"></div>
                 <a class="btn btn-primary text-uppercase" href= "http://localhost/Projet_Antoine_Xi/frontend/showAliment.php">Return</a>
             </div>
+
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href= "./showAliment.php">←Return</a></div>
         </div>
     </div>
 </div>

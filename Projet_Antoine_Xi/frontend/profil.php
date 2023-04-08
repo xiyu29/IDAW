@@ -63,9 +63,9 @@
                 <p class="post-meta" id="emailProfil"></p>
             </div>
             <div class="d-flex justify-content-end mb-4">
-                <a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/modificationProfil.php">Modifier mon profil</a>
+                <a class="btn btn-primary text-uppercase" href="./modificationProfil.php">Modifier mon profil</a>
                 <div style="width: 25px;"></div>
-                <a class="btn btn-primary text-uppercase" href="http://localhost/Projet_Antoine_Xi/frontend/modificationMdp.php">Modifier mon mot de passe</a>
+                <a class="btn btn-primary text-uppercase" href="./modificationMdp.php">Modifier mon mot de passe</a>
             </div>
         </div>
     </div>
