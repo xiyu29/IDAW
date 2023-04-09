@@ -1,6 +1,6 @@
 # Installation
 
-Aucune installation n'est nécessaire pour utiliser ce code.
+Pour installer ce code, il suffit de modifier les 2 constantes du chemin au début du fichier scripts.js pourq correspondre au chemin de l'API.
 
 # Utilisation
 
